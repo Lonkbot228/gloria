@@ -1339,10 +1339,6 @@
       const name = document.getElementById('fname').value.trim();
       const formData = new FormData();
 
-      // ВАЖНО: Ниже укажите ключ, который придет вам на почту от Web3Forms
-      formData.append("access_key", "0d8e6282-633e-4ef0-9e0d-51426c6e5a99");
-      formData.append("subject", "Новая заявка с лендинга Gloria (Шаг 3)");
-
       // Данные из формы
       formData.append("First Name", name);
       formData.append("Last Name", document.getElementById('lname').value.trim());
@@ -1361,16 +1357,16 @@
       if (codeEl) formData.append("Fortune Code", codeEl.textContent);
       if (seqEl) formData.append("Code Sequence", seqEl.textContent);
 
-      fetch("https://api.web3forms.com/submit", {
+      // Отправка данных на вебхук Make.com
+      fetch("https://hook.eu1.make.com/64snfd84egamgfcyr3l7e7cptviuvkyp", {
         method: "POST",
         body: formData
       })
-        .then(async (response) => {
-          let json = await response.json();
-          if (response.status == 200) {
+        .then((response) => {
+          if (response.ok) {
             alert('Thank you, ' + name + '! Gloria will send your Fortune Code and mysterious gift to your address very soon. ✨');
           } else {
-            alert('Ошибка при отправке: ' + json.message);
+            alert('Ошибка при отправке. Пожалуйста, попробуйте позже.');
           }
         })
         .catch((error) => {
