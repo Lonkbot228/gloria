@@ -902,6 +902,48 @@
         font-size: 28px
       }
     }
+
+    /* MYSTIC LOADER */
+    .mystic-loader {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 20px auto 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .orbit {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(126, 184, 247, 0.4);
+      border-top-color: rgba(240, 192, 96, 0.9);
+      animation: spin 2s linear infinite;
+    }
+    .orbit-1 { width: 100%; height: 100%; animation-duration: 3s; }
+    .orbit-2 { width: 75%; height: 75%; animation-duration: 2s; animation-direction: reverse; border-top-color: rgba(126, 184, 247, 0.9); }
+    .orbit-3 { width: 50%; height: 50%; animation-duration: 1.5s; }
+    .core-glow {
+      font-size: 32px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .loading-title {
+      color: #fff;
+      font-size: 22px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .loading-text {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      font-style: italic;
+      min-height: 24px;
+      transition: opacity 0.4s ease;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 50% { opacity: 0.5; transform: scale(0.9); text-shadow: 0 0 20px rgba(240,192,96,0.8); } }
   </style>
 </head>
 
@@ -944,42 +986,19 @@
             &rarr;</button>
           <p class="micro-copy">&#128274; Secure &amp; confidential &middot; No credit card required</p>
         </div>
+      </div>
 
-        
-
-        <div class="card" id="how-it-works">
-          <h2>How Gloria Calculates Your Code</h2>
-          <p class="section-sub">Your Fortune Code is derived from ancient numerology &mdash; a practice that has guided
-            humans for thousands of years.</p>
-          <div class="calc-step">
-            <div class="step-num">1</div>
-            <div class="step-body"><strong>Your Birth Vibration</strong><br>Every date of birth carries a hidden
-              numerical signature. Gloria adds each digit of your birth date together, then reduces the result until a
-              single, pure number remains &mdash; your Birth Vibration. This number has vibrated within you since the
-              very first moment you came into the world.</div>
+      <!-- LOADING STEP -->
+      <div id="step-loading" style="display:none; text-align:center;">
+        <div class="card fade-up" style="padding: 60px 40px;">
+          <div class="mystic-loader">
+            <div class="orbit orbit-1"></div>
+            <div class="orbit orbit-2"></div>
+            <div class="orbit orbit-3"></div>
+            <div class="core-glow">&#10024;</div>
           </div>
-          <div class="calc-step">
-            <div class="step-num">2</div>
-            <div class="step-body"><strong>Your Desire Frequency</strong><br>Your favourite number is not a coincidence.
-              It is the number your subconscious mind has always been drawn to &mdash; because it resonates with your
-              deepest desires. Gloria amplifies it using the sacred multiplier of 3, the number of cosmic manifestation,
-              and reduces it to its purest form: your Desire Frequency.</div>
-          </div>
-          <div class="calc-step">
-            <div class="step-num">3</div>
-            <div class="step-body"><strong>Your Personal Fortune Code</strong><br>When your Birth Vibration meets your
-              Desire Frequency, something extraordinary happens. The universe recognises the convergence of who you
-              <em>are</em> and what you <em>want</em>. From this union emerges a single, powerful digit: your Personal
-              Fortune Code &mdash; uniquely, irrevocably yours.
-            </div>
-          </div>
-          <div class="calc-step">
-            <div class="step-num">4</div>
-            <div class="step-body"><strong>Your Fortune Sequence</strong><br>Your Fortune Code is just the beginning.
-              Gloria uses it to unlock a 5-digit Fortune Sequence &mdash; a cosmic fingerprint woven from your three
-              sacred numbers. This sequence has never existed before in the history of the universe, and it never will
-              again.</div>
-          </div>
+          <h3 class="loading-title">Connecting to Cosmic Frequencies...</h3>
+          <p class="loading-text" id="loading-msg">Aligning your birth vibration</p>
         </div>
       </div>
 
@@ -1289,10 +1308,42 @@
       document.getElementById('result-desire').textContent = d;
       document.getElementById('result-code').textContent = c;
       document.getElementById('result-sequence').textContent = s.join('  —  ');
+      
+      // UX Transition: Show Loading Screen
       document.getElementById('step-form').style.display = 'none';
-      const r = document.getElementById('step-result');
-      r.style.display = 'block'; r.classList.add('visible');
+      const loading = document.getElementById('step-loading');
+      loading.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      const msgs = [
+        "Analyzing your Birth Vibration...",
+        "Extracting Desire Frequency...",
+        "Harmonizing your personal numbers...",
+        "Unlocking your Fortune Sequence..."
+      ];
+      const msgEl = document.getElementById('loading-msg');
+      let step = 0;
+      
+      const inv = setInterval(() => {
+        step++;
+        if (step < msgs.length) {
+          msgEl.style.opacity = 0;
+          setTimeout(() => {
+            msgEl.textContent = msgs[step];
+            msgEl.style.opacity = 1;
+          }, 400);
+        } else {
+          clearInterval(inv);
+        }
+      }, 1500);
+
+      // After 6 seconds, show the final result
+      setTimeout(() => {
+        loading.style.display = 'none';
+        const r = document.getElementById('step-result');
+        r.style.display = 'block'; r.classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 6000);
     }
 
     function submitAddress() {
