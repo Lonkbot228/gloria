@@ -21,7 +21,7 @@
     min-height: 500px;
     overflow: hidden;
     border-radius: 24px;
-    background: var(--deep);
+    background: linear-gradient(0.308turn, rgba(34,47,74,1) 0%, rgba(34,47,74,1) 100%);
     font-family: 'Montserrat', sans-serif;
     color: var(--white);
     box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
@@ -36,35 +36,21 @@
     padding: 0;
   }
 
-  /* ===== GALAXY CANVAS ===== */
-  #gloria-embed-block #galaxy-canvas {
+  /* ===== VIDEO BACKGROUND ===== */
+  #gloria-embed-block .videoBackground {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    background: radial-gradient(ellipse at 30% 50%, #0d1e4a 0%, #04091a 60%, #010510 100%);
+    overflow: hidden;
   }
-
-  #gloria-embed-block .nebula {
-    position: absolute;
-    inset: 0;
+  
+  #gloria-embed-block .videoBackground video {
     width: 100%;
     height: 100%;
-    z-index: 1;
+    object-fit: cover;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse 60% 40% at 20% 45%, rgba(40, 80, 200, .18) 0%, transparent 70%),
-      radial-gradient(ellipse 45% 35% at 80% 25%, rgba(80, 40, 180, .14) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 30% at 55% 80%, rgba(20, 60, 160, .12) 0%, transparent 70%),
-      radial-gradient(ellipse 30% 25% at 10% 20%, rgba(60, 100, 220, .1) 0%, transparent 70%);
-    animation: nebulaDrift 18s ease-in-out infinite alternate;
-  }
-
-  @keyframes nebulaDrift {
-    0% { opacity: .8; transform: scale(1) translateX(0) }
-    50% { opacity: 1; transform: scale(1.04) translateX(12px) }
-    100% { opacity: .85; transform: scale(.97) translateX(-8px) }
   }
 
   #gloria-embed-block .embed-content {
@@ -501,9 +487,12 @@
 </style>
 
 <div id="gloria-embed-block">
-  <!-- ANIMATED GALAXY CANVAS -->
-  <canvas id="galaxy-canvas"></canvas>
-  <div class="nebula"></div>
+  <!-- VIDEO BACKGROUND -->
+  <div class="videoBackground">
+    <video preload="auto" playsinline autoplay loop muted>
+      <source src="https://dl.dropbox.com/scl/fi/2wd26j9lqwhdgio78wjuu/0_Space_Stars_1280x720.mp4?rlkey=ayax80vi8atyehd84q5wj00b9&st=bgg58aa6&dl=0" type="video/mp4">
+    </video>
+  </div>
 
   <div class="embed-content">
     <main class="content">
@@ -609,194 +598,7 @@
 </div>
 
 <script>
-  /* =============================================
-    GALAXY ANIMATION
-    ============================================= */
-  (function () {
-    const parentBlock = document.getElementById('gloria-embed-block');
-    const canvas = document.getElementById('galaxy-canvas');
-    if (!parentBlock || !canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    let W, H, stars = [], shootingStars = [], nebulae = [];
 
-    function resize() {
-      // Resize to fit the embedding block, ensuring retina display crispness
-      W = canvas.width = parentBlock.offsetWidth;
-      H = canvas.height = parentBlock.offsetHeight;
-    }
-
-    /* --- Star class --- */
-    function Star() { this.reset(); }
-    Star.prototype.reset = function () {
-      this.x = Math.random() * W;
-      this.y = Math.random() * H;
-      this.r = Math.random() * 1.4 + 0.2;
-      this.alpha = Math.random() * 0.7 + 0.15;
-      this.da = (Math.random() * 0.008 + 0.002) * (Math.random() < .5 ? 1 : -1);
-      this.vx = (Math.random() - 0.5) * 0.06;
-      this.vy = (Math.random() - 0.5) * 0.06;
-      this.hue = Math.random() < 0.7 ? 210 : 40;
-      this.sat = Math.random() < 0.7 ? 60 : 30;
-    };
-    Star.prototype.update = function () {
-      this.x += this.vx; this.y += this.vy;
-      this.alpha += this.da;
-      if (this.alpha <= 0.05 || this.alpha >= 0.95) this.da *= -1;
-      if (this.x < 0) this.x = W; if (this.x > W) this.x = 0;
-      if (this.y < 0) this.y = H; if (this.y > H) this.y = 0;
-    };
-    Star.prototype.draw = function () {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
-      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 4);
-      grd.addColorStop(0, 'hsla(' + this.hue + ',' + this.sat + '%,100%,0.9)');
-      grd.addColorStop(1, 'hsla(' + this.hue + ',' + this.sat + '%,80%,0)');
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r * 4, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,100%,1)';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
-
-    /* --- Shooting star --- */
-    function ShootingStar() { this.reset(); }
-    ShootingStar.prototype.reset = function () {
-      this.x = Math.random() * W * 1.2 - W * 0.1;
-      this.y = Math.random() * H * 0.5;
-      const angle = Math.PI / 6 + Math.random() * Math.PI / 6;
-      const speed = 6 + Math.random() * 10;
-      this.vx = Math.cos(angle) * speed;
-      this.vy = Math.sin(angle) * speed;
-      this.len = 80 + Math.random() * 140;
-      this.alpha = 0;
-      this.fadeIn = true;
-      this.dead = false;
-      this.trail = [];
-    };
-    ShootingStar.prototype.update = function () {
-      if (this.fadeIn) { this.alpha += 0.08; if (this.alpha >= 1) this.fadeIn = false; }
-      else { this.alpha -= 0.03; if (this.alpha <= 0) this.dead = true; }
-      this.trail.push({ x: this.x, y: this.y });
-      if (this.trail.length > 20) this.trail.shift();
-      this.x += this.vx; this.y += this.vy;
-    };
-    ShootingStar.prototype.draw = function () {
-      if (this.trail.length < 2) return;
-      ctx.save();
-      for (let i = 1; i < this.trail.length; i++) {
-        const t = i / this.trail.length;
-        ctx.globalAlpha = t * this.alpha * 0.9;
-        ctx.strokeStyle = 'hsla(200,80%,95%,1)';
-        ctx.lineWidth = t * 2;
-        ctx.beginPath();
-        ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
-        ctx.lineTo(this.trail[i].x, this.trail[i].y);
-        ctx.stroke();
-      }
-      ctx.globalAlpha = this.alpha * 0.8;
-      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
-      grd.addColorStop(0, 'rgba(180,220,255,0.9)');
-      grd.addColorStop(1, 'rgba(80,140,255,0)');
-      ctx.fillStyle = grd;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
-
-    /* --- Nebula blob --- */
-    function NebulaBg(x, y, rx, ry, hue, alpha) {
-      this.x = x; this.y = y; this.rx = rx; this.ry = ry;
-      this.hue = hue; this.baseAlpha = alpha;
-      this.phase = Math.random() * Math.PI * 2;
-      this.speed = 0.0004 + Math.random() * 0.0003;
-      this.dx = (Math.random() - 0.5) * 0.15;
-      this.dy = (Math.random() - 0.5) * 0.08;
-    }
-    NebulaBg.prototype.update = function () {
-      this.phase += this.speed;
-      this.x += this.dx; this.y += this.dy;
-      if (this.x < -this.rx) this.x = W + this.rx;
-      if (this.x > W + this.rx) this.x = -this.rx;
-      if (this.y < -this.ry) this.y = H + this.ry;
-      if (this.y > H + this.ry) this.y = -this.ry;
-    };
-    NebulaBg.prototype.draw = function () {
-      const a = this.baseAlpha * (0.7 + 0.3 * Math.sin(this.phase));
-      ctx.save();
-      ctx.globalAlpha = a;
-      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, Math.max(this.rx, this.ry));
-      grd.addColorStop(0, 'hsla(' + this.hue + ',70%,40%,0.55)');
-      grd.addColorStop(0.5, 'hsla(' + this.hue + ',60%,30%,0.2)');
-      grd.addColorStop(1, 'hsla(' + this.hue + ',50%,20%,0)');
-      ctx.scale(1, this.ry / this.rx);
-      ctx.beginPath();
-      ctx.arc(this.x, this.y * (this.rx / this.ry), this.rx, 0, Math.PI * 2);
-      ctx.fillStyle = grd;
-      ctx.fill();
-      ctx.restore();
-    };
-
-    function init() {
-      resize();
-      stars = [];
-      const COUNT = Math.floor(W * H / 2200);
-      for (let i = 0; i < COUNT; i++) stars.push(new Star());
-
-      nebulae = [
-        new NebulaBg(W * 0.18, H * 0.45, 420, 260, 220, 0.35),
-        new NebulaBg(W * 0.78, H * 0.28, 320, 200, 200, 0.28),
-        new NebulaBg(W * 0.55, H * 0.75, 380, 220, 240, 0.22),
-        new NebulaBg(W * 0.05, H * 0.15, 280, 180, 210, 0.18),
-      ];
-    }
-
-    let shootTimer = 0;
-    function spawnShootingStarIfNeeded(dt) {
-      shootTimer += dt;
-      const interval = 3000 + Math.random() * 5000;
-      if (shootTimer > interval) {
-        shootTimer = 0;
-        shootingStars.push(new ShootingStar());
-      }
-    }
-
-    let last = 0;
-    function loop(ts) {
-      // Recheck sizes occasionally to handle any fluid resize from containers
-      if (parentBlock.offsetWidth !== W || parentBlock.offsetHeight !== H) {
-        resize();
-      }
-
-      const dt = ts - last; last = ts;
-      const bg = ctx.createRadialGradient(W * .35, H * .45, 0, W * .35, H * .45, W * .8);
-      bg.addColorStop(0, '#0d1e4a');
-      bg.addColorStop(0.5, '#06102e');
-      bg.addColorStop(1, '#020818');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, W, H);
-
-      nebulae.forEach(n => { n.update(); n.draw(); });
-      stars.forEach(s => { s.update(); s.draw(); });
-      spawnShootingStarIfNeeded(dt);
-      shootingStars = shootingStars.filter(s => !s.dead);
-      shootingStars.forEach(s => { s.update(); s.draw(); });
-
-      requestAnimationFrame(loop);
-    }
-
-    // Observer to re-init canvas cleanly if height changes dramatically
-    const resizeObserver = new ResizeObserver(() => { resize(); });
-    resizeObserver.observe(parentBlock);
-
-    init();
-    requestAnimationFrame(loop);
-  })();
 
   /* =============================================
     NUMEROLOGY ENGINE
