@@ -1,1416 +1,907 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Discover Your Personal Fortune Code — Free Reading by Gloria</title>
-  <meta name="description"
-    content="Find out your unique Fortune Code based on your date of birth and numerology. Gloria reveals what the stars have prepared for you — completely free." />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Discover Your Personal Fortune Code — Free Reading by Gloria" />
-  <meta property="og:description"
-    content="Your Fortune Code has been written in the stars since the day you were born. Gloria will reveal it to you — completely free." />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --navy: #0b1a3d;
-      --deep: #04091a;
-      --accent: #4a7fd4;
-      --accent2: #7eb8f7;
-      --gold: #f0c060;
-      --gold-dk: #b8860b;
-      --white: #ffffff;
-      --offwhite: #dce8ff;
-      --muted: #7a9acc;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
-
-    html {
-      scroll-behavior: smooth
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: transparent;
-      color: var(--white);
-      overflow-x: hidden
-    }
-
-    /* ===== GALAXY CANVAS ===== */
-    #galaxy-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: transparent;
-    }
-
-    /* Nebula overlays - purely CSS, layered on top of canvas */
-    .nebula {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse 60% 40% at 20% 45%, rgba(40, 80, 200, .18) 0%, transparent 70%),
-        radial-gradient(ellipse 45% 35% at 80% 25%, rgba(80, 40, 180, .14) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 30% at 55% 80%, rgba(20, 60, 160, .12) 0%, transparent 70%),
-        radial-gradient(ellipse 30% 25% at 10% 20%, rgba(60, 100, 220, .1) 0%, transparent 70%);
-      animation: nebulaDrift 18s ease-in-out infinite alternate;
-    }
-
-    @keyframes nebulaDrift {
-      0% {
-        opacity: .8;
-        transform: scale(1) translateX(0)
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.04) translateX(12px)
-      }
-
-      100% {
-        opacity: .85;
-        transform: scale(.97) translateX(-8px)
-      }
-    }
-
-    .page {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      background: transparent;
-      border: none;
-      color: rgba(255,255,255,0.5);
-      font-size: 28px;
-      line-height: 1;
-      cursor: pointer;
-      transition: color 0.2s;
-      z-index: 10;
-    }
-    
-    .close-btn:hover {
-      color: #fff;
-    }
-
-    /* SCARCITY BAR */
-    .scarcity-bar {
-      background: rgba(4, 9, 26, .9);
-      border-bottom: 1px solid rgba(74, 127, 212, .3);
-      text-align: center;
-      padding: 9px 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: .8px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(14px)
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: .4
-      }
-    }
-
-    .blink {
-      animation: blink 2s infinite
-    }
-
-    /* NAV */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 48px;
-      border-bottom: 1px solid rgba(74, 127, 212, .12);
-      backdrop-filter: blur(10px)
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--offwhite)
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      color: var(--offwhite);
-      text-decoration: none;
-      opacity: .8;
-      transition: opacity .2s
-    }
-
-    .nav-links a:hover {
-      opacity: 1
-    }
-
-    .nav-btn {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, .35);
-      color: var(--white);
-      padding: 8px 22px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .2s, border-color .2s
-    }
-
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, .1);
-      border-color: rgba(255, 255, 255, .7)
-    }
-
-    /* HERO */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      min-height: 88vh;
-      padding: 0 48px;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto
-    }
-
-    .hero-left {
-      padding: 40px 0
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 20px
-    }
-
-    .hero-tag::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent2)
-    }
-
-    h1 {
-      font-size: clamp(36px, 5.5vw, 60px);
-      font-weight: 800;
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 12px;
-      letter-spacing: -.5px;
-      text-shadow: 0 0 40px rgba(74, 127, 212, .3)
-    }
-
-    h1 em {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 1.05em;
-      color: var(--offwhite)
-    }
-
-    .hero-sub {
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--offwhite);
-      opacity: .8;
-      margin-bottom: 32px;
-      font-weight: 300;
-      max-width: 440px
-    }
-
-    .hero-sub strong {
-      color: var(--gold);
-      font-weight: 600;
-      opacity: 1
-    }
-
-    /* GLORIA PHOTO */
-    .hero-right {
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      height: 88vh
-    }
-
-    .gloria-photo-wrap {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center
-    }
-
-    .gloria-photo-wrap::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 420px;
-      height: 580px;
-      background: radial-gradient(ellipse at 50% 75%, rgba(74, 127, 212, .2) 0%, transparent 70%);
-      border-radius: 50% 50% 0 0;
-      animation: gloriaPulse 4s ease-in-out infinite
-    }
-
-    @keyframes gloriaPulse {
-
-      0%,
-      100% {
-        opacity: .6
-      }
-
-      50% {
-        opacity: 1
-      }
-    }
-
-    .gloria-photo {
-      height: 100%;
-      max-height: 640px;
-      object-fit: contain;
-      object-position: bottom center;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 0 60px rgba(74, 127, 212, .6)) drop-shadow(0 0 120px rgba(40, 80, 200, .3));
-      animation: gloriaFloat 4s ease-in-out infinite
-    }
-
-    @keyframes gloriaFloat {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-10px)
-      }
-    }
-
-    .photo-glow {
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 340px;
-      height: 90px;
-      background: radial-gradient(ellipse, rgba(74, 127, 212, .55) 0%, transparent 70%);
-      filter: blur(22px);
-      animation: gloriaPulse 4s ease-in-out infinite
-    }
-
-    /* PROOF STRIP */
-    .proof-strip {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-      padding: 20px 48px;
-      border-top: 1px solid rgba(74, 127, 212, .12);
-      border-bottom: 1px solid rgba(74, 127, 212, .12);
-      background: rgba(4, 9, 26, .5);
-      backdrop-filter: blur(10px)
-    }
-
-    .proof-item {
-      text-align: center
-    }
-
-    .proof-number {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--gold);
-      display: block;
-      line-height: 1
-    }
-
-    .proof-label {
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-top: 4px
-    }
-
-    /* CONTENT */
-    .content {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 24px 80px
-    }
-
-    /* CARD */
-    .card {
-      position: relative;
-      background: rgba(8, 18, 55, .75);
-      border: 1px solid rgba(126, 184, 247, .25);
-      border-radius: 20px;
-      padding: 40px 32px 32px;
-      margin: 0 auto 20px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .5), 0 0 40px rgba(74, 127, 212, .12), inset 0 1px 0 rgba(255, 255, 255, .1);
-      width: 100%;
-      max-width: 680px;
-    }
-
-    h2 {
-      font-size: clamp(18px, 3vw, 24px);
-      font-weight: 700;
-      color: var(--white);
-      text-align: center;
-      margin-bottom: 8px
-    }
-
-    .section-sub {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--offwhite);
-      opacity: .75;
-      text-align: center;
-      margin-bottom: 28px;
-      font-weight: 300
-    }
-
-    /* PROGRESS */
-    .progress-wrap {
-      margin-bottom: 24px
-    }
-
-    .progress-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px
-    }
-
-    .progress-track {
-      height: 4px;
-      background: rgba(255, 255, 255, .07);
-      border-radius: 10px;
-      overflow: hidden
-    }
-
-    .progress-fill {
-      height: 100%;
-      border-radius: 10px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transition: width .6s ease
-    }
-
-    /* FORM */
-    .form-group {
-      margin-bottom: 20px
-    }
-
-    label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 8px
-    }
-
-    input[type="date"],
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(74, 127, 212, .32);
-      border-radius: 10px;
-      color: var(--white);
-      font-size: 16px;
-      font-family: 'Montserrat', sans-serif;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s, background .2s
-    }
-
-    input:focus {
-      border-color: var(--accent2);
-      background: rgba(255, 255, 255, .08);
-      box-shadow: 0 0 0 3px rgba(74, 127, 212, .2)
-    }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, .28)
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(.6) sepia(1) hue-rotate(180deg)
-    }
-
-    /* BUTTONS */
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 18px 24px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      text-align: center;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: transform .15s, box-shadow .2s, filter .2s;
-      position: relative;
-      overflow: hidden
-    }
-
-    .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .12) 0%, transparent 50%);
-      pointer-events: none
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1)
-    }
-
-    .btn:active {
-      transform: translateY(0)
-    }
-
-    .btn-blue {
-      background: linear-gradient(135deg, #1a4fa0, #3a7fd4);
-      color: var(--white);
-      box-shadow: 0 6px 30px rgba(30, 80, 180, .6)
-    }
-
-    .btn-blue:hover {
-      box-shadow: 0 10px 40px rgba(30, 80, 180, .85)
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, var(--gold-dk), var(--gold), #c8960c);
-      color: #1a0800;
-      box-shadow: 0 6px 30px rgba(200, 150, 20, .5)
-    }
-
-    .btn-gold:hover {
-      box-shadow: 0 10px 40px rgba(200, 150, 20, .75)
-    }
-
-    @keyframes pulse-blue {
-
-      0%,
-      100% {
-        box-shadow: 0 6px 30px rgba(30, 80, 180, .6)
-      }
-
-      50% {
-        box-shadow: 0 6px 50px rgba(30, 80, 180, .9), 0 0 0 8px rgba(74, 127, 212, .1)
-      }
-    }
-
-    .pulsing {
-      animation: pulse-blue 2.4s infinite
-    }
-
-    .micro-copy {
-      text-align: center;
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 10px
-    }
-
-    .free-badge {
-      display: block;
-      width: fit-content;
-      margin: 0 auto 24px;
-      background: linear-gradient(135deg, var(--gold-dk), var(--gold));
-      color: #1a0800;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 6px 20px;
-      border-radius: 30px
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(74, 127, 212, .13);
-      margin: 24px 0
-    }
-
-    /* TESTIMONIALS */
-    .testimonial {
-      background: rgba(255, 255, 255, .025);
-      border-left: 3px solid rgba(74, 127, 212, .45);
-      border-radius: 0 10px 10px 0;
-      padding: 16px 18px;
-      margin-bottom: 14px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-style: italic;
-      line-height: 1.7;
-      color: var(--offwhite);
-      opacity: .85
-    }
-
-    .testimonial-author {
-      font-family: 'Montserrat', sans-serif;
-      font-style: normal;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-top: 8px
-    }
-
-    /* CALC STEPS */
-    .calc-step {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      padding: 16px 18px;
-      margin-bottom: 12px;
-      background: rgba(255, 255, 255, .02);
-      border: 1px solid rgba(74, 127, 212, .1);
-      border-radius: 12px
-    }
-
-    .step-num {
-      min-width: 32px;
-      height: 32px;
-      flex-shrink: 0;
-      background: linear-gradient(135deg, #1a4fa0, var(--accent));
-      color: var(--white);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 13px;
-      box-shadow: 0 4px 12px rgba(30, 80, 180, .4)
-    }
-
-    .step-body {
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--offwhite);
-      opacity: .85
-    }
-
-    .step-body strong {
-      color: var(--white);
-      font-weight: 700
-    }
-
-    /* CODE DISPLAY */
-    .code-grid {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 20px 0
-    }
-
-    .code-box {
-      flex: 1;
-      min-width: 120px;
-      background: rgba(4, 9, 26, .75);
-      border: 1px solid rgba(74, 127, 212, .28);
-      border-radius: 12px;
-      padding: 18px 12px;
-      text-align: center
-    }
-
-    .code-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px
-    }
-
-    .code-value {
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--gold);
-      text-shadow: 0 0 30px rgba(240, 192, 96, .6);
-      line-height: 1
-    }
-
-    .code-seq-box {
-      background: rgba(4, 9, 26, .75);
-      border: 1px solid rgba(240, 192, 96, .22);
-      border-radius: 14px;
-      padding: 22px;
-      text-align: center;
-      margin-bottom: 24px;
-      box-shadow: 0 0 40px rgba(240, 192, 96, .06)
-    }
-
-    .code-sequence {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: 12px;
-      color: var(--white);
-      text-shadow: 0 0 20px rgba(126, 184, 247, .5)
-    }
-
-    .seq-note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 10px;
-      font-weight: 300
-    }
-
-    .result-msg {
-      font-size: 14px;
-      line-height: 1.9;
-      color: var(--offwhite);
-      opacity: .85;
-      text-align: center;
-      margin: 20px 0;
-      font-weight: 300
-    }
-
-    .result-msg strong {
-      color: var(--white);
-      font-weight: 700;
-      opacity: 1
-    }
-
-    .result-msg .gold {
-      color: var(--gold);
-      font-weight: 600;
-      opacity: 1
-    }
-
-    .result-msg em {
-      font-style: italic;
-      color: var(--accent2);
-      opacity: 1
-    }
-
-    .urgency-bar {
-      background: rgba(180, 60, 60, .1);
-      border: 1px solid rgba(220, 100, 100, .28);
-      border-radius: 10px;
-      padding: 12px 18px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #ffaaaa;
-      text-align: center;
-      margin-bottom: 16px
-    }
-
-    .countdown-wrap {
-      text-align: center;
-      margin-bottom: 24px
-    }
-
-    .countdown-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px
-    }
-
-    .countdown {
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--gold);
-      letter-spacing: 6px;
-      text-shadow: 0 0 20px rgba(240, 192, 96, .4)
-    }
-
-    .trust-bar {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-top: 16px
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 6px
-    }
-
-    .input-row {
-      display: flex;
-      gap: 14px
-    }
-
-    .input-row .form-group {
-      flex: 1
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(28px)
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0)
-      }
-    }
-
-    .fade-up {
-      animation: fadeUp .7s ease forwards
-    }
-
-    #step-result {
-      display: none
-    }
-
-    #step-result.visible {
-      display: block
-    }
-
-    footer {
-      text-align: center;
-      padding: 24px;
-      font-size: 11px;
-      color: var(--muted);
-      border-top: 1px solid rgba(74, 127, 212, .1);
-      background: rgba(4, 9, 26, .7)
-    }
-
-    @media(max-width:768px) {
-      nav {
-        padding: 14px 20px
-      }
-
-      .nav-links {
-        display: none
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        min-height: auto;
-        padding: 30px 20px 0;
-        gap: 0
-      }
-
-      .hero-right {
-        height: 320px
-      }
-
-      .gloria-photo {
-        max-height: 320px
-      }
-
-      .proof-strip {
-        gap: 24px;
-        padding: 16px 20px
-      }
-
-      .card {
-        padding: 24px 20px
-      }
-
-      .code-grid {
-        gap: 8px
-      }
-
-      .code-value {
-        font-size: 30px
-      }
-
-      .code-sequence {
-        font-size: 22px;
-        letter-spacing: 8px
-      }
-
-      .input-row {
-        flex-direction: column;
-        gap: 0
-      }
-
-      .countdown {
-        font-size: 28px
-      }
-    }
-
-    /* MYSTIC LOADER */
-    .mystic-loader {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      margin: 20px auto 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .orbit {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(126, 184, 247, 0.4);
-      border-top-color: rgba(240, 192, 96, 0.9);
-      animation: spin 2s linear infinite;
-    }
-    .orbit-1 { width: 100%; height: 100%; animation-duration: 3s; }
-    .orbit-2 { width: 75%; height: 75%; animation-duration: 2s; animation-direction: reverse; border-top-color: rgba(126, 184, 247, 0.9); }
-    .orbit-3 { width: 50%; height: 50%; animation-duration: 1.5s; }
-    .core-glow {
-      font-size: 32px;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    .loading-title {
-      color: #fff;
-      font-size: 22px;
-      margin-bottom: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    .loading-text {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 16px;
-      font-style: italic;
-      min-height: 24px;
-      transition: opacity 0.4s ease;
-    }
-
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    @keyframes pulse { 50% { opacity: 0.5; transform: scale(0.9); text-shadow: 0 0 20px rgba(240,192,96,0.8); } }
-  </style>
-</head>
-
-<body>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b1a3d;
+    --deep: #04091a;
+    --accent: #4a7fd4;
+    --accent2: #7eb8f7;
+    --gold: #f0c060;
+    --gold-dk: #b8860b;
+    --white: #ffffff;
+    --offwhite: #dce8ff;
+    --muted: #7a9acc;
+  }
+
+  /* Only scope what is needed to #gloria-embed-block to not pollute Tilda */
+  #gloria-embed-block {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--deep);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--white);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
+    border: 1px solid rgba(126, 184, 247, 0.1);
+    box-sizing: border-box;
+  }
+  #gloria-embed-block *,
+  #gloria-embed-block *::before,
+  #gloria-embed-block *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ===== GALAXY CANVAS ===== */
+  #gloria-embed-block #galaxy-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(ellipse at 30% 50%, #0d1e4a 0%, #04091a 60%, #010510 100%);
+  }
+
+  #gloria-embed-block .nebula {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 45%, rgba(40, 80, 200, .18) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 35% at 80% 25%, rgba(80, 40, 180, .14) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 30% at 55% 80%, rgba(20, 60, 160, .12) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 25% at 10% 20%, rgba(60, 100, 220, .1) 0%, transparent 70%);
+    animation: nebulaDrift 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes nebulaDrift {
+    0% { opacity: .8; transform: scale(1) translateX(0) }
+    50% { opacity: 1; transform: scale(1.04) translateX(12px) }
+    100% { opacity: .85; transform: scale(.97) translateX(-8px) }
+  }
+
+  #gloria-embed-block .embed-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px 15px;
+  }
+
+  /* SCARCITY BAR */
+  #gloria-embed-block .scarcity-bar {
+    background: rgba(4, 9, 26, .9);
+    border-bottom: 1px solid rgba(74, 127, 212, .3);
+    text-align: center;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: .8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: .4 } }
+  #gloria-embed-block .blink { animation: blink 2s infinite }
+
+  /* HERO */
+  #gloria-embed-block .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 88vh;
+    padding: 0 48px;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  #gloria-embed-block .hero-left { padding: 40px 0 }
+  #gloria-embed-block h1 {
+    font-size: clamp(36px, 5.5vw, 60px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: -.5px;
+    text-shadow: 0 0 40px rgba(74, 127, 212, .3);
+  }
+  #gloria-embed-block h1 em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.05em;
+    color: var(--offwhite);
+  }
+
+  /* PROOF STRIP */
+  #gloria-embed-block .proof-strip {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    padding: 20px 48px;
+    border-top: 1px solid rgba(74, 127, 212, .12);
+    border-bottom: 1px solid rgba(74, 127, 212, .12);
+    background: rgba(4, 9, 26, .5);
+    backdrop-filter: blur(10px);
+  }
+  #gloria-embed-block .proof-item { text-align: center }
+  #gloria-embed-block .proof-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+  #gloria-embed-block .proof-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* CONTENT */
+  #gloria-embed-block .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    margin-top: 40px;
+  }
+
+  /* CARD */
+  #gloria-embed-block .card {
+    background: rgba(12, 24, 66, 0.45);
+    border: 1px solid rgba(126, 184, 247, 0.3);
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 0 20px rgba(126, 184, 247, 0.05);
+  }
+
+  #gloria-embed-block h2 {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  #gloria-embed-block .section-sub {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--offwhite);
+    opacity: .75;
+    text-align: center;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  #gloria-embed-block .section-sub strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* PROGRESS */
+  #gloria-embed-block .progress-wrap { margin-bottom: 24px }
+  #gloria-embed-block .progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  #gloria-embed-block .progress-track {
+    height: 4px;
+    background: rgba(255, 255, 255, .07);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  #gloria-embed-block .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width .6s ease;
+  }
+
+  /* FORM */
+  #gloria-embed-block .form-group { margin-bottom: 20px }
+  #gloria-embed-block label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+  #gloria-embed-block input[type="date"],
+  #gloria-embed-block input[type="number"],
+  #gloria-embed-block input[type="text"] {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(74, 127, 212, .32);
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+  }
+  #gloria-embed-block input:focus {
+    border-color: var(--accent2);
+    background: rgba(255, 255, 255, .08);
+    box-shadow: 0 0 0 3px rgba(74, 127, 212, .2);
+  }
+  #gloria-embed-block input::placeholder { color: rgba(255, 255, 255, .28) }
+  #gloria-embed-block input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(.6) sepia(1) hue-rotate(180deg);
+  }
+
+  /* BUTTONS - PREMIUM GOLD */
+  #gloria-embed-block .btn {
+    display: block;
+    width: 100%;
+    padding: 20px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all .3s ease;
+    position: relative;
+    overflow: hidden;
+    color: #1a0800;
+    background: linear-gradient(135deg, #f9d423, #ff4e50); /* fallback */
+    background: linear-gradient(135deg, #FFDF73 0%, #D4AF37 50%, #B8860B 100%);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.1);
+    text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+  }
+
+  #gloria-embed-block .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  #gloria-embed-block .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(212, 175, 55, 0.6), inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -2px 0 rgba(0,0,0,0.1);
+    filter: brightness(1.1);
+  }
+
+  #gloria-embed-block .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+  }
+
+  @keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4), inset 0 2px 0 rgba(255,255,255,0.4); }
+    50% { box-shadow: 0 8px 48px rgba(212, 175, 55, 0.8), 0 0 0 8px rgba(212, 175, 55, 0.2), inset 0 2px 0 rgba(255,255,255,0.4); }
+  }
+
+  #gloria-embed-block .pulsing {
+    animation: pulse-gold 2.4s infinite;
+  }
+
+  #gloria-embed-block .micro-copy {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  #gloria-embed-block .free-badge {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #FFDF73 0%, #D4AF37 100%);
+    color: #1a0800;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  }
+
+  #gloria-embed-block .divider {
+    border: none;
+    border-top: 1px solid rgba(74, 127, 212, .13);
+    margin: 24px 0;
+  }
+
+  /* TESTIMONIALS */
+  #gloria-embed-block .testimonial {
+    background: rgba(255, 255, 255, .025);
+    border-left: 3px solid rgba(74, 127, 212, .45);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--offwhite);
+    opacity: .85;
+  }
+  #gloria-embed-block .testimonial-author {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-top: 8px;
+  }
+
+  /* CALC STEPS */
+  #gloria-embed-block .calc-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, .02);
+    border: 1px solid rgba(74, 127, 212, .1);
+    border-radius: 12px;
+    transition: transform 0.2s, background 0.2s;
+  }
+  #gloria-embed-block .calc-step:hover {
+    background: rgba(255, 255, 255, .04);
+    transform: translateX(4px);
+  }
+  #gloria-embed-block .step-num {
+    min-width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #1a4fa0, var(--accent));
+    color: var(--white);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(30, 80, 180, .4);
+  }
+  #gloria-embed-block .step-body {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--offwhite);
+    opacity: .85;
+  }
+  #gloria-embed-block .step-body strong {
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  /* CODE DISPLAY */
+  #gloria-embed-block .code-grid { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  #gloria-embed-block .code-box {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(4, 9, 26, .75);
+    border: 1px solid rgba(74, 127, 212, .28);
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  #gloria-embed-block .code-box:hover { transform: translateY(-4px); }
+  #gloria-embed-block .code-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  #gloria-embed-block .code-value {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(240, 192, 96, .6);
+    line-height: 1;
+  }
+  #gloria-embed-block .code-seq-box {
+    background: rgba(4, 9, 26, .75);
+    border: 1px solid rgba(240, 192, 96, .22);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: 0 0 40px rgba(240, 192, 96, .06);
+  }
+  #gloria-embed-block .code-sequence {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 12px;
+    color: var(--white);
+    text-shadow: 0 0 20px rgba(126, 184, 247, .5);
+  }
+  #gloria-embed-block .seq-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-weight: 300;
+  }
+  #gloria-embed-block .result-msg {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--offwhite);
+    opacity: .85;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 300;
+  }
+  #gloria-embed-block .result-msg strong { color: var(--white); font-weight: 700; opacity: 1; }
+  #gloria-embed-block .result-msg .gold { color: var(--gold); font-weight: 600; opacity: 1; }
+  #gloria-embed-block .result-msg em { font-style: italic; color: var(--accent2); opacity: 1; }
+
+  #gloria-embed-block .urgency-bar {
+    background: rgba(180, 60, 60, .1);
+    border: 1px solid rgba(220, 100, 100, .28);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffaaaa;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  #gloria-embed-block .countdown-wrap { text-align: center; margin-bottom: 24px; }
+  #gloria-embed-block .countdown-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  #gloria-embed-block .countdown {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px rgba(240, 192, 96, .4);
+  }
+  #gloria-embed-block .trust-bar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 16px;
+  }
+  #gloria-embed-block .trust-item { display: flex; align-items: center; gap: 6px; }
+  #gloria-embed-block .input-row { display: flex; gap: 14px; }
+  #gloria-embed-block .input-row .form-group { flex: 1; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  #gloria-embed-block .fade-up { animation: fadeUp .7s ease forwards; }
+  #gloria-embed-block #step-result { display: none; }
+  #gloria-embed-block #step-result.visible { display: block; }
+  
+  @media(max-width:768px) {
+    #gloria-embed-block .proof-strip { gap: 24px; padding: 16px 20px; }
+    #gloria-embed-block .card { padding: 24px 20px; }
+    #gloria-embed-block .code-grid { gap: 8px; }
+    #gloria-embed-block .code-value { font-size: 30px; }
+    #gloria-embed-block .code-sequence { font-size: 22px; letter-spacing: 8px; }
+    #gloria-embed-block .input-row { flex-direction: column; gap: 0; }
+    #gloria-embed-block .countdown { font-size: 28px; }
+  }
+</style>
+
+<div id="gloria-embed-block">
   <!-- ANIMATED GALAXY CANVAS -->
   <canvas id="galaxy-canvas"></canvas>
   <div class="nebula"></div>
 
-  <div class="page">
-    
-
-    
-
-    
-
-    
-    <main class="content" style="margin-top:40px">
+  <div class="embed-content">
+    <main class="content">
 
       <div id="step-form">
         <div class="card">
-          <button class="close-btn" aria-label="Close" onclick="window.parent.postMessage({action: 'closeGloriaPopup'}, '*')">&times;</button>
-          <h2>&#10024; Discover Your Personal Fortune Code</h2>
-          <p class="section-sub">Answer these 2 quick questions &mdash; Gloria will do the rest.</p>
+          <h2>&#10024; Узнайте Свой Личный Код Судьбы</h2>
+          <p class="section-sub">Ответьте на 2 коротких вопроса &mdash; Глория сделает все остальное.</p>
           <div class="progress-wrap">
-            <div class="progress-label"><span>Step 1 of 3 &mdash; Your Details</span><span>33%</span></div>
+            <div class="progress-label"><span>Шаг 1 из 3 &mdash; Ваши данные</span><span>33%</span></div>
             <div class="progress-track">
               <div class="progress-fill" style="width:33%"></div>
             </div>
           </div>
           <div class="form-group">
-            <label for="birthdate">&#128197; Your Date of Birth</label>
+            <label for="birthdate">&#128197; Дата Вашего рождения</label>
             <input type="date" id="birthdate" autocomplete="bday" />
           </div>
           <div class="form-group">
-            <label for="favnumber">&#128290; Your Favourite Number (1&ndash;99)</label>
-            <input type="number" id="favnumber" min="1" max="99" placeholder="e.g. 7" />
+            <label for="favnumber">&#128290; Ваше любимое число (1&ndash;99)</label>
+            <input type="number" id="favnumber" min="1" max="99" placeholder="например, 7" />
           </div>
-          <button class="btn btn-blue pulsing" onclick="calculateCode()">&#10024; Reveal My Fortune Code &mdash; FREE
-            &rarr;</button>
-          <p class="micro-copy">&#128274; Secure &amp; confidential &middot; No credit card required</p>
+          <button class="btn pulsing" onclick="calculateCode()">&#10024; Раскрыть Мой Код Судьбы &mdash; БЕСПЛАТНО &rarr;</button>
+          <p class="micro-copy">&#128274; Безопасно и конфиденциально &middot; Кредитная карта не требуется</p>
         </div>
-      </div>
 
-      <!-- LOADING STEP -->
-      <div id="step-loading" style="display:none; text-align:center;">
-        <div class="card fade-up" style="padding: 60px 40px;">
-          <div class="mystic-loader">
-            <div class="orbit orbit-1"></div>
-            <div class="orbit orbit-2"></div>
-            <div class="orbit orbit-3"></div>
-            <div class="core-glow">&#10024;</div>
-          </div>
-          <h3 class="loading-title">Connecting to Cosmic Frequencies...</h3>
-          <p class="loading-text" id="loading-msg">Aligning your birth vibration</p>
-        </div>
+
       </div>
 
       <div id="step-result">
         <div class="card fade-up">
-          <button class="close-btn" aria-label="Close" onclick="window.parent.postMessage({action: 'closeGloriaPopup'}, '*')">&times;</button>
-          <div class="urgency-bar">&#9889; URGENT &mdash; Gloria has detected something exceptional in your code. This
-            cosmic window closes in:</div>
+          <div class="urgency-bar">&#9889; СРОЧНО &mdash; Глория обнаружила нечто исключительное в вашем коде. Это космическое окно закрывается через:</div>
           <div class="countdown-wrap">
-            <div class="countdown-label">Time remaining to claim your free reading</div>
+            <div class="countdown-label">Время, оставшееся до получения бесплатного разбора</div>
             <div class="countdown" id="countdown">23:59:47</div>
           </div>
           <div class="progress-wrap" style="margin-bottom:28px">
-            <div class="progress-label"><span>Step 2 of 3 &mdash; Your Code Revealed</span><span>66%</span></div>
+            <div class="progress-label"><span>Шаг 2 из 3 &mdash; Ваш Код Раскрыт</span><span>66%</span></div>
             <div class="progress-track">
               <div class="progress-fill" style="width:66%"></div>
             </div>
           </div>
-          <h2>&#127775; Gloria Has Completed Your Reading</h2>
+          <h2>&#127775; Глория Завершила Ваш Разбор</h2>
           <div class="code-grid">
             <div class="code-box">
-              <div class="code-label">Birth Vibration</div>
+              <div class="code-label">Вибрация Рождения</div>
               <div class="code-value" id="result-birth">&mdash;</div>
             </div>
             <div class="code-box">
-              <div class="code-label">Desire Frequency</div>
+              <div class="code-label">Частота Желания</div>
               <div class="code-value" id="result-desire">&mdash;</div>
             </div>
             <div class="code-box">
-              <div class="code-label">Fortune Code</div>
+              <div class="code-label">Код Судьбы</div>
               <div class="code-value" id="result-code">&mdash;</div>
             </div>
           </div>
           <div class="code-seq-box">
-            <div class="code-label" style="margin-bottom:10px">Your Unique Fortune Sequence</div>
+            <div class="code-label" style="margin-bottom:10px">Ваша Уникальная Последовательность Судьбы</div>
             <div class="code-sequence" id="result-sequence">&mdash; &mdash; &mdash; &mdash; &mdash;</div>
-            <div class="seq-note">This sequence is yours and yours alone &mdash; it has never appeared before, and never
-              will again.</div>
+            <div class="seq-note">Эта последовательность принадлежит только вам &mdash; она никогда не появлялась раньше и никогда не повторится.</div>
           </div>
           <p class="result-msg">
-            <strong>&#9889; A Personal Message From Gloria:</strong><br><br>
-            In all her years of practice, Gloria has only encountered this precise configuration a handful of times
-            &mdash; and every single person who acted on it <em>transformed their life within weeks.</em><br><br>
-            Gloria sees something extraordinary hidden within your numbers. A convergence of cosmic energy pointing to
-            an imminent and <strong>MAJOR turning point</strong> in your life &mdash; in luck, in money, in
-            destiny.<br><br>
-            But what Gloria has discovered goes far beyond what she can reveal on a screen. The full meaning of your
-            Fortune Sequence, the secret it carries, and the <span class="gold">&#127873; mysterious gift the universe
-              has prepared for you</span>&hellip; can only be delivered to you <strong>personally.</strong><br><br>
-            <em>The stars are aligned <strong>today &mdash; and today only.</strong> Do not let this moment pass.</em>
+            <strong>&#9889; Личное Сообщение от Глории:</strong><br><br>
+            За все годы практики Глория сталкивалась с такой точной конфигурацией всего пару раз, и каждый раз жизнь этих людей <em>менялась за считанные недели.</em><br><br>
+            Глория видит нечто экстраординарное, скрытое в ваших числах. Схождение космической энергии, указывающее на <strong>ВАЖНЫЙ поворотный момент</strong> в вашей жизни &mdash; в удаче, деньгах и судьбе.<br><br>
+            Но то, что обнаружила Глория, выходит далеко за рамки того, что она может показать на экране. Полный смысл Вашей Последовательности Судьбы и <span style="color:var(--gold); font-weight: 600;">&#127873; загадочный подарок, который приготовила для вас Вселенная</span>&hellip; могут быть переданы вам только <strong>лично.</strong><br><br>
+            <em>Звезды сошлись <strong>только сегодня.</strong> Не упустите этот момент.</em>
           </p>
           <hr class="divider" />
-          <h2>&#128230; Where Should Gloria Send Everything?</h2>
-          <p class="section-sub">Your complete Fortune Code reading + your mysterious gift will be sent <strong
-              style="color:var(--gold)">completely free.</strong> No purchase. No commitment. Ever.</p>
-          <div class="free-badge">&#10024; Free Shipping Included</div>
+          <h2>&#128230; Куда Глория Должна Все Отправить?</h2>
+          <p class="section-sub">Ваш полный разбор Кода Судьбы + загадочный подарок будут отправлены <strong style="color:var(--gold)">абсолютно бесплатно.</strong> Никаких покупок и обязательств. Никогда.</p>
+          <div class="free-badge">&#10024; Бесплатная Доставка Включена</div>
           <div class="progress-wrap">
-            <div class="progress-label"><span>Step 3 of 3 &mdash; Delivery Details</span><span>99%</span></div>
+            <div class="progress-label"><span>Шаг 3 из 3 &mdash; Детали Доставки</span><span>99%</span></div>
             <div class="progress-track">
               <div class="progress-fill" style="width:99%"></div>
             </div>
           </div>
           <div class="input-row">
-            <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname"
-                placeholder="Your first name" autocomplete="given-name" /></div>
-            <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname"
-                placeholder="Your last name" autocomplete="family-name" /></div>
+            <div class="form-group"><label for="fname">Имя</label><input type="text" id="fname" placeholder="Ваше имя" autocomplete="given-name" /></div>
+            <div class="form-group"><label for="lname">Фамилия</label><input type="text" id="lname" placeholder="Вашая фамилия" autocomplete="family-name" /></div>
           </div>
-          <div class="form-group"><label for="address">Street Address</label><input type="text" id="address"
-              placeholder="Street address" autocomplete="street-address" /></div>
+          <div class="form-group"><label for="address">Адрес Улицы</label><input type="text" id="address" placeholder="Ваш адрес" autocomplete="street-address" /></div>
           <div class="input-row">
-            <div class="form-group"><label for="city">City</label><input type="text" id="city" placeholder="City"
-                autocomplete="address-level2" /></div>
-            <div class="form-group"><label for="zip">ZIP / Postal Code</label><input type="text" id="zip"
-                placeholder="ZIP code" autocomplete="postal-code" /></div>
+            <div class="form-group"><label for="city">Город</label><input type="text" id="city" placeholder="Город" autocomplete="address-level2" /></div>
+            <div class="form-group"><label for="zip">Почтовый Индекс</label><input type="text" id="zip" placeholder="Индекс" autocomplete="postal-code" /></div>
           </div>
-          <div class="form-group"><label for="country">Country</label><input type="text" id="country"
-              placeholder="Country" autocomplete="country-name" /></div>
-          <button class="btn btn-gold" onclick="submitAddress()">&#127873; Send My Fortune Code &amp; Mystery Gift
-            &mdash; FREE &rarr;</button>
-          <p class="micro-copy">&#128274; Your address is confidential and will never be shared or sold</p>
+          <div class="form-group"><label for="country">Страна</label><input type="text" id="country" placeholder="Страна" autocomplete="country-name" /></div>
+          <button class="btn" onclick="submitAddress()">&#127873; Прислать Мой Код Судьбы &amp; Подарок &mdash; БЕСПЛАТНО &rarr;</button>
+          <p class="micro-copy">&#128274; Ваш адрес конфиденциален и никогда не будет передан третьим лицам</p>
           <div class="trust-bar">
-            <div class="trust-item">&#128272; Secure &amp; Private</div>
-            <div class="trust-item">&#128236; Free Shipping</div>
-            <div class="trust-item">&#10024; No Hidden Fees</div>
-            <div class="trust-item">&#128683; No Credit Card</div>
+            <div class="trust-item">&#128272; Безопасно и приватно</div>
+            <div class="trust-item">&#128236; Бесплатная доставка</div>
+            <div class="trust-item">&#10024; Никаких скрытых сборов</div>
+            <div class="trust-item">&#128683; Без кредитной карты</div>
           </div>
         </div>
       </div>
     </main>
+  </div> <!-- .embed-content -->
 
+</div>
+
+<script>
+  /* =============================================
+    GALAXY ANIMATION
+    ============================================= */
+  (function () {
+    const parentBlock = document.getElementById('gloria-embed-block');
+    const canvas = document.getElementById('galaxy-canvas');
+    if (!parentBlock || !canvas) return;
     
-  </div>
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [], shootingStars = [], nebulae = [];
 
-  <script>
-    /* =============================================
-      GALAXY ANIMATION
-      ============================================= */
-    (function () {
-      const canvas = document.getElementById('galaxy-canvas');
-      const ctx = canvas.getContext('2d');
-      let W, H, stars = [], shootingStars = [], nebulae = [];
+    function resize() {
+      // Resize to fit the embedding block, ensuring retina display crispness
+      W = canvas.width = parentBlock.offsetWidth;
+      H = canvas.height = parentBlock.offsetHeight;
+    }
 
-      function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }
+    /* --- Star class --- */
+    function Star() { this.reset(); }
+    Star.prototype.reset = function () {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.4 + 0.2;
+      this.alpha = Math.random() * 0.7 + 0.15;
+      this.da = (Math.random() * 0.008 + 0.002) * (Math.random() < .5 ? 1 : -1);
+      this.vx = (Math.random() - 0.5) * 0.06;
+      this.vy = (Math.random() - 0.5) * 0.06;
+      this.hue = Math.random() < 0.7 ? 210 : 40;
+      this.sat = Math.random() < 0.7 ? 60 : 30;
+    };
+    Star.prototype.update = function () {
+      this.x += this.vx; this.y += this.vy;
+      this.alpha += this.da;
+      if (this.alpha <= 0.05 || this.alpha >= 0.95) this.da *= -1;
+      if (this.x < 0) this.x = W; if (this.x > W) this.x = 0;
+      if (this.y < 0) this.y = H; if (this.y > H) this.y = 0;
+    };
+    Star.prototype.draw = function () {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 4);
+      grd.addColorStop(0, 'hsla(' + this.hue + ',' + this.sat + '%,100%,0.9)');
+      grd.addColorStop(1, 'hsla(' + this.hue + ',' + this.sat + '%,80%,0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r * 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,100%,1)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
 
-      /* --- Star class --- */
-      function Star() {
-        this.reset();
-      }
-      Star.prototype.reset = function () {
-        this.x = Math.random() * W;
-        this.y = Math.random() * H;
-        this.r = Math.random() * 1.4 + 0.2;
-        this.alpha = Math.random() * 0.7 + 0.15;
-        this.da = (Math.random() * 0.008 + 0.002) * (Math.random() < .5 ? 1 : -1);
-        this.vx = (Math.random() - 0.5) * 0.06;
-        this.vy = (Math.random() - 0.5) * 0.06;
-        /* colour tint: blue-white or warm-white */
-        this.hue = Math.random() < 0.7 ? 210 : 40;
-        this.sat = Math.random() < 0.7 ? 60 : 30;
-      };
-      Star.prototype.update = function () {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.alpha += this.da;
-        if (this.alpha <= 0.05 || this.alpha >= 0.95) this.da *= -1;
-        if (this.x < 0) this.x = W; if (this.x > W) this.x = 0;
-        if (this.y < 0) this.y = H; if (this.y > H) this.y = 0;
-      };
-      Star.prototype.draw = function () {
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
-        /* tiny glow */
-        const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 4);
-        grd.addColorStop(0, 'hsla(' + this.hue + ',' + this.sat + '%,100%,0.9)');
-        grd.addColorStop(1, 'hsla(' + this.hue + ',' + this.sat + '%,80%,0)');
-        ctx.fillStyle = grd;
+    /* --- Shooting star --- */
+    function ShootingStar() { this.reset(); }
+    ShootingStar.prototype.reset = function () {
+      this.x = Math.random() * W * 1.2 - W * 0.1;
+      this.y = Math.random() * H * 0.5;
+      const angle = Math.PI / 6 + Math.random() * Math.PI / 6;
+      const speed = 6 + Math.random() * 10;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.len = 80 + Math.random() * 140;
+      this.alpha = 0;
+      this.fadeIn = true;
+      this.dead = false;
+      this.trail = [];
+    };
+    ShootingStar.prototype.update = function () {
+      if (this.fadeIn) { this.alpha += 0.08; if (this.alpha >= 1) this.fadeIn = false; }
+      else { this.alpha -= 0.03; if (this.alpha <= 0) this.dead = true; }
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 20) this.trail.shift();
+      this.x += this.vx; this.y += this.vy;
+    };
+    ShootingStar.prototype.draw = function () {
+      if (this.trail.length < 2) return;
+      ctx.save();
+      for (let i = 1; i < this.trail.length; i++) {
+        const t = i / this.trail.length;
+        ctx.globalAlpha = t * this.alpha * 0.9;
+        ctx.strokeStyle = 'hsla(200,80%,95%,1)';
+        ctx.lineWidth = t * 2;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r * 4, 0, Math.PI * 2);
-        ctx.fill();
-        /* core */
-        ctx.fillStyle = 'hsla(' + this.hue + ',' + this.sat + '%,100%,1)';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      };
-
-      /* --- Shooting star --- */
-      function ShootingStar() {
-        this.reset();
+        ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
+        ctx.lineTo(this.trail[i].x, this.trail[i].y);
+        ctx.stroke();
       }
-      ShootingStar.prototype.reset = function () {
-        this.x = Math.random() * W * 1.2 - W * 0.1;
-        this.y = Math.random() * H * 0.5;
-        const angle = Math.PI / 6 + Math.random() * Math.PI / 6;   /* 30-60 deg */
-        const speed = 6 + Math.random() * 10;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.len = 80 + Math.random() * 140;
-        this.alpha = 0;
-        this.fadeIn = true;
-        this.dead = false;
-        this.trail = [];
-      };
-      ShootingStar.prototype.update = function () {
-        if (this.fadeIn) { this.alpha += 0.08; if (this.alpha >= 1) this.fadeIn = false; }
-        else { this.alpha -= 0.03; if (this.alpha <= 0) this.dead = true; }
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 20) this.trail.shift();
-        this.x += this.vx; this.y += this.vy;
-      };
-      ShootingStar.prototype.draw = function () {
-        if (this.trail.length < 2) return;
-        ctx.save();
-        for (let i = 1; i < this.trail.length; i++) {
-          const t = i / this.trail.length;
-          ctx.globalAlpha = t * this.alpha * 0.9;
-          ctx.strokeStyle = 'hsla(200,80%,95%,1)';
-          ctx.lineWidth = t * 2;
-          ctx.beginPath();
-          ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
-          ctx.lineTo(this.trail[i].x, this.trail[i].y);
-          ctx.stroke();
-        }
-        /* head glow */
-        ctx.globalAlpha = this.alpha * 0.8;
-        const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
-        grd.addColorStop(0, 'rgba(180,220,255,0.9)');
-        grd.addColorStop(1, 'rgba(80,140,255,0)');
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      };
+      ctx.globalAlpha = this.alpha * 0.8;
+      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 8);
+      grd.addColorStop(0, 'rgba(180,220,255,0.9)');
+      grd.addColorStop(1, 'rgba(80,140,255,0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
 
-      /* --- Nebula blob (soft drifting cloud) --- */
-      function NebulaBg(x, y, rx, ry, hue, alpha) {
-        this.x = x; this.y = y; this.rx = rx; this.ry = ry;
-        this.hue = hue; this.baseAlpha = alpha;
-        this.phase = Math.random() * Math.PI * 2;
-        this.speed = 0.0004 + Math.random() * 0.0003;
-        this.dx = (Math.random() - 0.5) * 0.15;
-        this.dy = (Math.random() - 0.5) * 0.08;
-      }
-      NebulaBg.prototype.update = function () {
-        this.phase += this.speed;
-        this.x += this.dx; this.y += this.dy;
-        if (this.x < -this.rx) this.x = W + this.rx;
-        if (this.x > W + this.rx) this.x = -this.rx;
-        if (this.y < -this.ry) this.y = H + this.ry;
-        if (this.y > H + this.ry) this.y = -this.ry;
-      };
-      NebulaBg.prototype.draw = function () {
-        const a = this.baseAlpha * (0.7 + 0.3 * Math.sin(this.phase));
-        ctx.save();
-        ctx.globalAlpha = a;
-        const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, Math.max(this.rx, this.ry));
-        grd.addColorStop(0, 'hsla(' + this.hue + ',70%,40%,0.55)');
-        grd.addColorStop(0.5, 'hsla(' + this.hue + ',60%,30%,0.2)');
-        grd.addColorStop(1, 'hsla(' + this.hue + ',50%,20%,0)');
-        ctx.scale(1, this.ry / this.rx);
-        ctx.beginPath();
-        ctx.arc(this.x, this.y * (this.rx / this.ry), this.rx, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-        ctx.restore();
-      };
+    /* --- Nebula blob --- */
+    function NebulaBg(x, y, rx, ry, hue, alpha) {
+      this.x = x; this.y = y; this.rx = rx; this.ry = ry;
+      this.hue = hue; this.baseAlpha = alpha;
+      this.phase = Math.random() * Math.PI * 2;
+      this.speed = 0.0004 + Math.random() * 0.0003;
+      this.dx = (Math.random() - 0.5) * 0.15;
+      this.dy = (Math.random() - 0.5) * 0.08;
+    }
+    NebulaBg.prototype.update = function () {
+      this.phase += this.speed;
+      this.x += this.dx; this.y += this.dy;
+      if (this.x < -this.rx) this.x = W + this.rx;
+      if (this.x > W + this.rx) this.x = -this.rx;
+      if (this.y < -this.ry) this.y = H + this.ry;
+      if (this.y > H + this.ry) this.y = -this.ry;
+    };
+    NebulaBg.prototype.draw = function () {
+      const a = this.baseAlpha * (0.7 + 0.3 * Math.sin(this.phase));
+      ctx.save();
+      ctx.globalAlpha = a;
+      const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, Math.max(this.rx, this.ry));
+      grd.addColorStop(0, 'hsla(' + this.hue + ',70%,40%,0.55)');
+      grd.addColorStop(0.5, 'hsla(' + this.hue + ',60%,30%,0.2)');
+      grd.addColorStop(1, 'hsla(' + this.hue + ',50%,20%,0)');
+      ctx.scale(1, this.ry / this.rx);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y * (this.rx / this.ry), this.rx, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+      ctx.restore();
+    };
 
-      /* --- Init --- */
-      function init() {
-        resize();
-        stars = [];
-        const COUNT = Math.floor(W * H / 2200);
-        for (let i = 0; i < COUNT; i++) stars.push(new Star());
+    function init() {
+      resize();
+      stars = [];
+      const COUNT = Math.floor(W * H / 2200);
+      for (let i = 0; i < COUNT; i++) stars.push(new Star());
 
-        nebulae = [
-          new NebulaBg(W * 0.18, H * 0.45, 420, 260, 220, 0.35),
-          new NebulaBg(W * 0.78, H * 0.28, 320, 200, 200, 0.28),
-          new NebulaBg(W * 0.55, H * 0.75, 380, 220, 240, 0.22),
-          new NebulaBg(W * 0.05, H * 0.15, 280, 180, 210, 0.18),
-        ];
-      }
-
-      /* --- Shooting star spawner --- */
-      let shootTimer = 0;
-      function spawnShootingStarIfNeeded(dt) {
-        shootTimer += dt;
-        const interval = 3000 + Math.random() * 5000;
-        if (shootTimer > interval) {
-          shootTimer = 0;
-          shootingStars.push(new ShootingStar());
-        }
-      }
-
-      /* --- Render loop --- */
-      let last = 0;
-      function loop(ts) {
-        const dt = ts - last; last = ts;
-
-        /* deep space gradient bg */
-        const bg = ctx.createRadialGradient(W * .35, H * .45, 0, W * .35, H * .45, W * .8);
-        bg.addColorStop(0, '#0d1e4a');
-        bg.addColorStop(0.5, '#06102e');
-        bg.addColorStop(1, '#020818');
-        ctx.fillStyle = bg;
-        ctx.clearRect(0, 0, W, H);
-
-        /* nebulae */
-        nebulae.forEach(n => { n.update(); n.draw(); });
-
-        /* stars */
-        stars.forEach(s => { s.update(); s.draw(); });
-
-        /* shooting stars */
-        spawnShootingStarIfNeeded(dt);
-        shootingStars = shootingStars.filter(s => !s.dead);
-        shootingStars.forEach(s => { s.update(); s.draw(); });
-
-        requestAnimationFrame(loop);
-      }
-
-      window.addEventListener('resize', () => { resize(); init(); });
-      init();
-      requestAnimationFrame(loop);
-    })();
-
-    /* =============================================
-      NUMEROLOGY ENGINE
-      ============================================= */
-    function reduceToSingle(n) { while (n > 9) n = String(n).split('').reduce((a, d) => a + parseInt(d), 0); return n; }
-    function calcBirth(d) { return reduceToSingle(d.replace(/-/g, '').split('').reduce((a, c) => a + parseInt(c), 0)); }
-    function calcDesire(n) { return reduceToSingle(n * 3); }
-    function calcCode(b, d) { return reduceToSingle(b * d); }
-    function calcSeq(b, d, c) { return [c, reduceToSingle(b + d + c), reduceToSingle(b * 2 + d), reduceToSingle(d * 2 + b), reduceToSingle(c * b + d)]; }
-
-    function calculateCode() {
-      const bd = document.getElementById('birthdate').value;
-      const fn = parseInt(document.getElementById('favnumber').value);
-      if (!bd || isNaN(fn) || fn < 1 || fn > 99) { alert('Please fill in both your date of birth and your favourite number.'); return; }
-      const b = calcBirth(bd), d = calcDesire(fn), c = calcCode(b, d), s = calcSeq(b, d, c);
-      document.getElementById('result-birth').textContent = b;
-      document.getElementById('result-desire').textContent = d;
-      document.getElementById('result-code').textContent = c;
-      document.getElementById('result-sequence').textContent = s.join('  —  ');
-      
-      // UX Transition: Show Loading Screen
-      document.getElementById('step-form').style.display = 'none';
-      const loading = document.getElementById('step-loading');
-      loading.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      const msgs = [
-        "Analyzing your Birth Vibration...",
-        "Extracting Desire Frequency...",
-        "Harmonizing your personal numbers...",
-        "Unlocking your Fortune Sequence..."
+      nebulae = [
+        new NebulaBg(W * 0.18, H * 0.45, 420, 260, 220, 0.35),
+        new NebulaBg(W * 0.78, H * 0.28, 320, 200, 200, 0.28),
+        new NebulaBg(W * 0.55, H * 0.75, 380, 220, 240, 0.22),
+        new NebulaBg(W * 0.05, H * 0.15, 280, 180, 210, 0.18),
       ];
-      const msgEl = document.getElementById('loading-msg');
-      let step = 0;
-      
-      const inv = setInterval(() => {
-        step++;
-        if (step < msgs.length) {
-          msgEl.style.opacity = 0;
-          setTimeout(() => {
-            msgEl.textContent = msgs[step];
-            msgEl.style.opacity = 1;
-          }, 400);
-        } else {
-          clearInterval(inv);
-        }
-      }, 1500);
-
-      // After 6 seconds, show the final result
-      setTimeout(() => {
-        loading.style.display = 'none';
-        const r = document.getElementById('step-result');
-        r.style.display = 'block'; r.classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 6000);
     }
 
-    function submitAddress() {
-      const ids = ['fname', 'lname', 'address', 'city', 'zip', 'country'];
-      for (const id of ids) {
-        if (!document.getElementById(id).value.trim()) {
-          alert('Please complete all fields so Gloria knows where to send your gift.');
-          document.getElementById(id).focus();
-          return;
-        }
+    let shootTimer = 0;
+    function spawnShootingStarIfNeeded(dt) {
+      shootTimer += dt;
+      const interval = 3000 + Math.random() * 5000;
+      if (shootTimer > interval) {
+        shootTimer = 0;
+        shootingStars.push(new ShootingStar());
+      }
+    }
+
+    let last = 0;
+    function loop(ts) {
+      // Recheck sizes occasionally to handle any fluid resize from containers
+      if (parentBlock.offsetWidth !== W || parentBlock.offsetHeight !== H) {
+        resize();
       }
 
-      const name = document.getElementById('fname').value.trim();
-      const formData = new FormData();
+      const dt = ts - last; last = ts;
+      const bg = ctx.createRadialGradient(W * .35, H * .45, 0, W * .35, H * .45, W * .8);
+      bg.addColorStop(0, '#0d1e4a');
+      bg.addColorStop(0.5, '#06102e');
+      bg.addColorStop(1, '#020818');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
 
-      // Данные из формы
-      formData.append("First Name", name);
-      formData.append("Last Name", document.getElementById('lname').value.trim());
-      formData.append("Address", document.getElementById('address').value.trim());
-      formData.append("City", document.getElementById('city').value.trim());
-      formData.append("Zip", document.getElementById('zip').value.trim());
-      formData.append("Country", document.getElementById('country').value.trim());
+      nebulae.forEach(n => { n.update(); n.draw(); });
+      stars.forEach(s => { s.update(); s.draw(); });
+      spawnShootingStarIfNeeded(dt);
+      shootingStars = shootingStars.filter(s => !s.dead);
+      shootingStars.forEach(s => { s.update(); s.draw(); });
 
-      // Если на странице есть расчеты, тоже их захватим для удобства
-      const birthEl = document.getElementById('result-birth');
-      const desireEl = document.getElementById('result-desire');
-      const codeEl = document.getElementById('result-code');
-      const seqEl = document.getElementById('result-sequence');
-      if (birthEl) formData.append("Birth Number", birthEl.textContent);
-      if (desireEl) formData.append("Desire Number", desireEl.textContent);
-      if (codeEl) formData.append("Fortune Code", codeEl.textContent);
-      if (seqEl) formData.append("Code Sequence", seqEl.textContent);
-
-      // Отправка данных на вебхук Make.com
-      fetch("https://hook.eu1.make.com/64snfd84egamgfcyr3l7e7cptviuvkyp", {
-        method: "POST",
-        body: formData
-      })
-        .then((response) => {
-          if (response.ok) {
-            alert('Thank you, ' + name + '! Gloria will send your Fortune Code and mysterious gift to your address very soon. ✨');
-          } else {
-            alert('Ошибка при отправке. Пожалуйста, попробуйте позже.');
-          }
-        })
-        .catch((error) => {
-          alert('Произошла ошибка при отправке!');
-          console.log(error);
-        });
+      requestAnimationFrame(loop);
     }
 
-    /* COUNTDOWN */
-    !function () {
-      let s = 23 * 3600 + 59 * 60 + 47;
-      const el = document.getElementById('countdown');
-      if (!el) return;
-      const t = () => {
-        if (s <= 0) { el.textContent = '00:00:00'; return; }
-        el.textContent = String(Math.floor(s / 3600)).padStart(2, '0') + ':' + String(Math.floor((s % 3600) / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-        s--; setTimeout(t, 1000);
-      }; t();
-    }();
+    // Observer to re-init canvas cleanly if height changes dramatically
+    const resizeObserver = new ResizeObserver(() => { resize(); });
+    resizeObserver.observe(parentBlock);
 
-    /* SCARCITY */
-    let spots = 7;
-    setInterval(() => { if (spots > 1 && Math.random() < .15) { spots--; const el = document.getElementById('spots-left'); if (el) el.textContent = spots; } }, 20000);
-  </script>
-</body>
+    init();
+    requestAnimationFrame(loop);
+  })();
 
-</html>
+  /* =============================================
+    NUMEROLOGY ENGINE
+    ============================================= */
+  function reduceToSingle(n) { while (n > 9) n = String(n).split('').reduce((a, d) => a + parseInt(d), 0); return n; }
+  function calcBirth(d) { return reduceToSingle(d.replace(/-/g, '').split('').reduce((a, c) => a + parseInt(c), 0)); }
+  function calcDesire(n) { return reduceToSingle(n * 3); }
+  function calcCode(b, d) { return reduceToSingle(b * d); }
+  function calcSeq(b, d, c) { return [c, reduceToSingle(b + d + c), reduceToSingle(b * 2 + d), reduceToSingle(d * 2 + b), reduceToSingle(c * b + d)]; }
+
+  function calculateCode() {
+    const bd = document.getElementById('birthdate').value;
+    const fn = parseInt(document.getElementById('favnumber').value);
+    if (!bd || isNaN(fn) || fn < 1 || fn > 99) { alert('Пожалуйста, укажите дату вашего рождения и любимое число.'); return; }
+    const b = calcBirth(bd), d = calcDesire(fn), c = calcCode(b, d), s = calcSeq(b, d, c);
+    document.getElementById('result-birth').textContent = b;
+    document.getElementById('result-desire').textContent = d;
+    document.getElementById('result-code').textContent = c;
+    document.getElementById('result-sequence').textContent = s.join('  —  ');
+    document.getElementById('step-form').style.display = 'none';
+    const r = document.getElementById('step-result');
+    r.style.display = 'block'; r.classList.add('visible');
+    
+    // Smooth scroll specifically to top of embed block
+    document.getElementById('gloria-embed-block').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function submitAddress() {
+    const ids = ['fname', 'lname', 'address', 'city', 'zip', 'country'];
+    for (const id of ids) {
+      if (!document.getElementById(id).value.trim()) {
+        alert('Пожалуйста, заполните все поля, чтобы Глория знала, куда отправить ваш подарок.');
+        document.getElementById(id).focus();
+        return;
+      }
+    }
+
+    const name = document.getElementById('fname').value.trim();
+    const formData = new FormData();
+
+    formData.append("First Name", name);
+    formData.append("Last Name", document.getElementById('lname').value.trim());
+    formData.append("Address", document.getElementById('address').value.trim());
+    formData.append("City", document.getElementById('city').value.trim());
+    formData.append("Zip", document.getElementById('zip').value.trim());
+    formData.append("Country", document.getElementById('country').value.trim());
+
+    const birthEl = document.getElementById('result-birth');
+    const desireEl = document.getElementById('result-desire');
+    const codeEl = document.getElementById('result-code');
+    const seqEl = document.getElementById('result-sequence');
+    if (birthEl) formData.append("Birth Number", birthEl.textContent);
+    if (desireEl) formData.append("Desire Number", desireEl.textContent);
+    if (codeEl) formData.append("Fortune Code", codeEl.textContent);
+    if (seqEl) formData.append("Code Sequence", seqEl.textContent);
+
+    fetch("https://hook.eu1.make.com/64snfd84egamgfcyr3l7e7cptviuvkyp", {
+      method: "POST",
+      body: formData
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert('Спасибо, ' + name + '! Глория очень скоро отправит Ваш Код Судьбы и загадочный подарок на ваш адрес. ✨');
+        } else {
+          alert('Ошибка при отправке. Пожалуйста, попробуйте позже.');
+        }
+      })
+      .catch((error) => {
+        alert('Произошла ошибка при отправке!');
+        console.log(error);
+      });
+  }
+
+  /* COUNTDOWN */
+  !function () {
+    let s = 23 * 3600 + 59 * 60 + 47;
+    const el = document.getElementById('countdown');
+    if (!el) return;
+    const t = () => {
+      if (s <= 0) { el.textContent = '00:00:00'; return; }
+      el.textContent = String(Math.floor(s / 3600)).padStart(2, '0') + ':' + String(Math.floor((s % 3600) / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+      s--; setTimeout(t, 1000);
+    }; t();
+  }();
+
+  /* SCARCITY */
+  let spots = 7;
+  setInterval(() => { if (spots > 1 && Math.random() < .15) { spots--; const el = document.getElementById('spots-left'); if (el) el.textContent = spots; } }, 20000);
+</script>
