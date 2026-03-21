@@ -20,7 +20,6 @@
     width: 100%;
     min-height: 500px;
     overflow: hidden;
-    border-radius: 24px;
     background: linear-gradient(0.308turn, rgba(34,47,74,1) 0%, rgba(34,47,74,1) 100%);
     font-family: 'Montserrat', sans-serif;
     color: var(--white);
@@ -479,6 +478,30 @@
   #gloria-embed-block .input-row { display: flex; gap: 14px; }
   #gloria-embed-block .input-row .form-group { flex: 1; }
 
+  #gloria-embed-block .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0 20px;
+  }
+  #gloria-embed-block .checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--gold);
+    transform: scale(1.2);
+  }
+  #gloria-embed-block .checkbox-group label {
+    margin: 0;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--offwhite);
+    opacity: 0.9;
+    cursor: pointer;
+  }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
   #gloria-embed-block .fade-up { animation: fadeUp .7s ease forwards; }
   #gloria-embed-block #step-result { display: none; }
@@ -591,6 +614,10 @@
             <div class="form-group"><label for="zip">Почтовый Индекс</label><input type="text" id="zip" placeholder="Индекс" autocomplete="postal-code" /></div>
           </div>
           <div class="form-group"><label for="country">Страна</label><input type="text" id="country" placeholder="Страна" autocomplete="country-name" /></div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="privacyConsent" checked />
+            <label for="privacyConsent">Я согласен с <a href="/privacy" target="_blank" style="color: var(--accent2); text-decoration: underline;">политикой конфиденциальности</a></label>
+          </div>
           <button class="btn" onclick="submitAddress()">ПРИСЛАТЬ МОЙ КОД УДАЧИ &amp; ПОДАРОК &rarr;</button>
           <p class="micro-copy">&#128274; Ваш адрес конфиденциален и никогда не будет передан третьим лицам</p>
           <div class="trust-bar">
@@ -636,6 +663,12 @@
   }
 
   function submitAddress() {
+    const privacy = document.getElementById('privacyConsent');
+    if (privacy && !privacy.checked) {
+      alert('Пожалуйста, подтвердите согласие с политикой конфиденциальности.');
+      return;
+    }
+
     const ids = ['fname', 'lname', 'address', 'city', 'zip', 'country'];
     for (const id of ids) {
       if (!document.getElementById(id).value.trim()) {
