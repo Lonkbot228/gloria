@@ -224,7 +224,10 @@
   }
   #gloria-embed-block input[type="date"],
   #gloria-embed-block input[type="number"],
-  #gloria-embed-block input[type="text"] {
+  #gloria-embed-block input[type="text"],
+  #gloria-embed-block input[type="tel"],
+  #gloria-embed-block input[type="email"],
+  #gloria-embed-block select.form-select {
     width: 100%;
     padding: 15px 20px;
     background: rgba(255, 255, 255, .05);
@@ -236,12 +239,29 @@
     outline: none;
     transition: border-color .2s, box-shadow .2s, background .2s;
   }
-  #gloria-embed-block input:focus {
+  #gloria-embed-block input:focus,
+  #gloria-embed-block select.form-select:focus {
     border-color: var(--accent2);
     background: rgba(255, 255, 255, .08);
     box-shadow: 0 0 0 3px rgba(74, 127, 212, .2);
   }
   #gloria-embed-block input::placeholder { color: rgba(255, 255, 255, .28) }
+  #gloria-embed-block select.form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%237eb8f7%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    cursor: pointer;
+  }
+  #gloria-embed-block select.form-select option {
+    background: var(--navy, #0b1a3d);
+    color: var(--white, #ffffff);
+  }
+  #gloria-embed-block select.form-select:invalid {
+    color: rgba(255, 255, 255, .28);
+  }
   #gloria-embed-block input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(.6) sepia(1) hue-rotate(180deg);
   }
@@ -605,12 +625,24 @@
             </div>
           </div>
           <div class="input-row">
+            <div class="form-group"><label for="lname">Фамилия</label><input type="text" id="lname" placeholder="Ваша фамилия" autocomplete="family-name" /></div>
             <div class="form-group"><label for="fname">Имя</label><input type="text" id="fname" placeholder="Ваше имя" autocomplete="given-name" /></div>
-            <div class="form-group"><label for="lname">Фамилия</label><input type="text" id="lname" placeholder="Вашая фамилия" autocomplete="family-name" /></div>
+            <div class="form-group"><label for="mname">Отчество</label><input type="text" id="mname" placeholder="Ваше отчество" autocomplete="additional-name" /></div>
           </div>
-          <div class="form-group"><label for="address">Адрес Улицы</label><input type="text" id="address" placeholder="Ваш адрес" autocomplete="street-address" /></div>
           <div class="input-row">
-            <div class="form-group"><label for="city">Город</label><input type="text" id="city" placeholder="Город" autocomplete="address-level2" /></div>
+            <div class="form-group"><label for="gender">Пол</label>
+              <select id="gender" class="form-select" required>
+                <option value="" disabled selected hidden>Выберите пол</option>
+                <option value="Мужской">Мужской</option>
+                <option value="Женский">Женский</option>
+              </select>
+            </div>
+            <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" /></div>
+          </div>
+          <div class="form-group"><label for="email">Электронный адрес</label><input type="email" id="email" placeholder="example@mail.ru" autocomplete="email" /></div>
+          <div class="form-group"><label for="address">Улица, дом, корпус/строение, квартира</label><input type="text" id="address" placeholder="Например: ул. Ленина, д. 1, кв. 2" autocomplete="street-address" /></div>
+          <div class="input-row">
+            <div class="form-group"><label for="city">Город / Населенный пункт</label><input type="text" id="city" placeholder="Город или поселок" autocomplete="address-level2" /></div>
             <div class="form-group"><label for="zip">Почтовый Индекс</label><input type="text" id="zip" placeholder="Индекс" autocomplete="postal-code" /></div>
           </div>
           <div class="form-group"><label for="country">Страна</label><input type="text" id="country" placeholder="Страна" autocomplete="country-name" /></div>
@@ -669,10 +701,10 @@
       return;
     }
 
-    const ids = ['fname', 'lname', 'address', 'city', 'zip', 'country'];
+    const ids = ['lname', 'fname', 'mname', 'gender', 'phone', 'email', 'address', 'city', 'zip', 'country'];
     for (const id of ids) {
       if (!document.getElementById(id).value.trim()) {
-        alert('Пожалуйста, заполните все поля, чтобы Глория знала, куда отправить ваш подарок.');
+        alert('Пожалуйста, заполните все обязательные поля, чтобы Глория знала, куда отправить ваш подарок.');
         document.getElementById(id).focus();
         return;
       }
@@ -681,8 +713,12 @@
     const name = document.getElementById('fname').value.trim();
     const formData = new FormData();
 
-    formData.append("First Name", name);
     formData.append("Last Name", document.getElementById('lname').value.trim());
+    formData.append("First Name", name);
+    formData.append("Middle Name", document.getElementById('mname').value.trim());
+    formData.append("Gender", document.getElementById('gender').value.trim());
+    formData.append("Phone", document.getElementById('phone').value.trim());
+    formData.append("Email", document.getElementById('email').value.trim());
     formData.append("Address", document.getElementById('address').value.trim());
     formData.append("City", document.getElementById('city').value.trim());
     formData.append("Zip", document.getElementById('zip').value.trim());
