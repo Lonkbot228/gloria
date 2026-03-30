@@ -1,6 +1,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap"
+  rel="stylesheet">
 <style>
   :root {
     --navy: #0b1a3d;
@@ -20,13 +22,14 @@
     width: 100%;
     min-height: 500px;
     overflow: hidden;
-    background: linear-gradient(0.308turn, rgba(34,47,74,1) 0%, rgba(34,47,74,1) 100%);
+    background: linear-gradient(0.308turn, rgba(34, 47, 74, 1) 0%, rgba(34, 47, 74, 1) 100%);
     font-family: 'Montserrat', sans-serif;
     color: var(--white);
-    box-shadow: 0 40px 100px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.05);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(126, 184, 247, 0.1);
     box-sizing: border-box;
   }
+
   #gloria-embed-block *,
   #gloria-embed-block *::before,
   #gloria-embed-block *::after {
@@ -44,7 +47,7 @@
     z-index: 0;
     overflow: hidden;
   }
-  
+
   #gloria-embed-block .videoBackground video {
     width: 100%;
     height: 100%;
@@ -56,7 +59,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(0.256turn, rgba(3,0,14,0.96) 0%, rgba(3,0,22,0.93) 100%);
+    background: linear-gradient(0.256turn, rgba(3, 0, 14, 0.96) 0%, rgba(3, 0, 22, 0.93) 100%);
     opacity: 0.8;
     pointer-events: none;
   }
@@ -85,8 +88,21 @@
     margin-bottom: 24px;
   }
 
-  @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: .4 } }
-  #gloria-embed-block .blink { animation: blink 2s infinite }
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1
+    }
+
+    50% {
+      opacity: .4
+    }
+  }
+
+  #gloria-embed-block .blink {
+    animation: blink 2s infinite
+  }
 
   /* HERO */
   #gloria-embed-block .hero {
@@ -99,7 +115,11 @@
     max-width: 1200px;
     margin: 0 auto;
   }
-  #gloria-embed-block .hero-left { padding: 40px 0 }
+
+  #gloria-embed-block .hero-left {
+    padding: 40px 0
+  }
+
   #gloria-embed-block h1 {
     font-size: clamp(36px, 5.5vw, 60px);
     font-weight: 800;
@@ -109,6 +129,7 @@
     letter-spacing: -.5px;
     text-shadow: 0 0 40px rgba(74, 127, 212, .3);
   }
+
   #gloria-embed-block h1 em {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -129,7 +150,11 @@
     background: rgba(4, 9, 26, .5);
     backdrop-filter: blur(10px);
   }
-  #gloria-embed-block .proof-item { text-align: center }
+
+  #gloria-embed-block .proof-item {
+    text-align: center
+  }
+
   #gloria-embed-block .proof-number {
     font-size: 24px;
     font-weight: 800;
@@ -137,6 +162,7 @@
     display: block;
     line-height: 1;
   }
+
   #gloria-embed-block .proof-label {
     font-size: 10px;
     color: var(--muted);
@@ -172,6 +198,7 @@
     text-align: center;
     margin-bottom: 8px;
   }
+
   #gloria-embed-block .section-sub {
     font-size: 14px;
     line-height: 1.7;
@@ -181,13 +208,17 @@
     margin-bottom: 28px;
     font-weight: 300;
   }
+
   #gloria-embed-block .section-sub strong {
     color: var(--gold);
     font-weight: 600;
   }
 
   /* PROGRESS */
-  #gloria-embed-block .progress-wrap { margin-bottom: 24px }
+  #gloria-embed-block .progress-wrap {
+    margin-bottom: 24px
+  }
+
   #gloria-embed-block .progress-label {
     font-size: 11px;
     font-weight: 600;
@@ -198,12 +229,14 @@
     justify-content: space-between;
     margin-bottom: 8px;
   }
+
   #gloria-embed-block .progress-track {
     height: 4px;
     background: rgba(255, 255, 255, .07);
     border-radius: 10px;
     overflow: hidden;
   }
+
   #gloria-embed-block .progress-fill {
     height: 100%;
     border-radius: 10px;
@@ -212,7 +245,10 @@
   }
 
   /* FORM */
-  #gloria-embed-block .form-group { margin-bottom: 20px }
+  #gloria-embed-block .form-group {
+    margin-bottom: 20px
+  }
+
   #gloria-embed-block label {
     display: block;
     font-size: 11px;
@@ -222,6 +258,7 @@
     color: var(--accent2);
     margin-bottom: 8px;
   }
+
   #gloria-embed-block input[type="date"],
   #gloria-embed-block input[type="number"],
   #gloria-embed-block input[type="text"],
@@ -239,13 +276,18 @@
     outline: none;
     transition: border-color .2s, box-shadow .2s, background .2s;
   }
+
   #gloria-embed-block input:focus,
   #gloria-embed-block select.form-select:focus {
     border-color: var(--accent2);
     background: rgba(255, 255, 255, .08);
     box-shadow: 0 0 0 3px rgba(74, 127, 212, .2);
   }
-  #gloria-embed-block input::placeholder { color: rgba(255, 255, 255, .28) }
+
+  #gloria-embed-block input::placeholder {
+    color: rgba(255, 255, 255, .28)
+  }
+
   #gloria-embed-block select.form-select {
     appearance: none;
     -webkit-appearance: none;
@@ -255,13 +297,16 @@
     background-size: 16px;
     cursor: pointer;
   }
+
   #gloria-embed-block select.form-select option {
     background: var(--navy, #0b1a3d);
     color: var(--white, #ffffff);
   }
+
   #gloria-embed-block select.form-select:invalid {
     color: rgba(255, 255, 255, .28);
   }
+
   #gloria-embed-block input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(.6) sepia(1) hue-rotate(180deg);
   }
@@ -278,12 +323,15 @@
     text-transform: uppercase;
     text-align: center;
     border: none;
-    border-radius: 4px; /* Менее скругленные углы, как на скриншоте */
+    border-radius: 4px;
+    /* Менее скругленные углы, как на скриншоте */
     cursor: pointer;
     margin-top: 8px;
     transition: all .2s ease;
-    background-color: #ba9d60; /* Матовый золотисто-бежевый, как на скриншоте */
-    color: #ffffff; /* Белый текст */
+    background-color: #ba9d60;
+    /* Матовый золотисто-бежевый, как на скриншоте */
+    color: #ffffff;
+    /* Белый текст */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 
@@ -342,6 +390,7 @@
     color: var(--offwhite);
     opacity: .85;
   }
+
   #gloria-embed-block .testimonial-author {
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
@@ -365,10 +414,12 @@
     border-radius: 12px;
     transition: transform 0.2s, background 0.2s;
   }
+
   #gloria-embed-block .calc-step:hover {
     background: rgba(255, 255, 255, .04);
     transform: translateX(4px);
   }
+
   #gloria-embed-block .step-num {
     min-width: 32px;
     height: 32px;
@@ -383,19 +434,27 @@
     font-size: 13px;
     box-shadow: 0 4px 12px rgba(30, 80, 180, .4);
   }
+
   #gloria-embed-block .step-body {
     font-size: 13px;
     line-height: 1.75;
     color: var(--offwhite);
     opacity: .85;
   }
+
   #gloria-embed-block .step-body strong {
     color: var(--white);
     font-weight: 700;
   }
 
   /* CODE DISPLAY */
-  #gloria-embed-block .code-grid { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  #gloria-embed-block .code-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+
   #gloria-embed-block .code-box {
     flex: 1;
     min-width: 120px;
@@ -406,7 +465,11 @@
     text-align: center;
     transition: transform 0.3s;
   }
-  #gloria-embed-block .code-box:hover { transform: translateY(-4px); }
+
+  #gloria-embed-block .code-box:hover {
+    transform: translateY(-4px);
+  }
+
   #gloria-embed-block .code-label {
     font-size: 9px;
     font-weight: 700;
@@ -415,6 +478,7 @@
     color: var(--muted);
     margin-bottom: 8px;
   }
+
   #gloria-embed-block .code-value {
     font-size: 40px;
     font-weight: 800;
@@ -422,6 +486,7 @@
     text-shadow: 0 0 30px rgba(240, 192, 96, .6);
     line-height: 1;
   }
+
   #gloria-embed-block .code-seq-box {
     background: rgba(4, 9, 26, .75);
     border: 1px solid rgba(240, 192, 96, .22);
@@ -431,6 +496,7 @@
     margin-bottom: 24px;
     box-shadow: 0 0 40px rgba(240, 192, 96, .06);
   }
+
   #gloria-embed-block .code-sequence {
     font-size: 30px;
     font-weight: 800;
@@ -438,12 +504,14 @@
     color: var(--white);
     text-shadow: 0 0 20px rgba(126, 184, 247, .5);
   }
+
   #gloria-embed-block .seq-note {
     font-size: 12px;
     color: var(--muted);
     margin-top: 10px;
     font-weight: 300;
   }
+
   #gloria-embed-block .result-msg {
     font-size: 14px;
     line-height: 1.9;
@@ -453,9 +521,24 @@
     margin: 20px 0;
     font-weight: 300;
   }
-  #gloria-embed-block .result-msg strong { color: var(--white); font-weight: 700; opacity: 1; }
-  #gloria-embed-block .result-msg .gold { color: var(--gold); font-weight: 600; opacity: 1; }
-  #gloria-embed-block .result-msg em { font-style: italic; color: var(--accent2); opacity: 1; }
+
+  #gloria-embed-block .result-msg strong {
+    color: var(--white);
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  #gloria-embed-block .result-msg .gold {
+    color: var(--gold);
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  #gloria-embed-block .result-msg em {
+    font-style: italic;
+    color: var(--accent2);
+    opacity: 1;
+  }
 
   #gloria-embed-block .urgency-bar {
     background: rgba(180, 60, 60, .1);
@@ -468,7 +551,12 @@
     text-align: center;
     margin-bottom: 16px;
   }
-  #gloria-embed-block .countdown-wrap { text-align: center; margin-bottom: 24px; }
+
+  #gloria-embed-block .countdown-wrap {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
   #gloria-embed-block .countdown-label {
     font-size: 10px;
     font-weight: 700;
@@ -477,6 +565,7 @@
     color: var(--muted);
     margin-bottom: 8px;
   }
+
   #gloria-embed-block .countdown {
     font-size: 36px;
     font-weight: 800;
@@ -484,6 +573,7 @@
     letter-spacing: 6px;
     text-shadow: 0 0 20px rgba(240, 192, 96, .4);
   }
+
   #gloria-embed-block .trust-bar {
     display: flex;
     justify-content: center;
@@ -494,9 +584,21 @@
     color: var(--muted);
     margin-top: 16px;
   }
-  #gloria-embed-block .trust-item { display: flex; align-items: center; gap: 6px; }
-  #gloria-embed-block .input-row { display: flex; gap: 14px; }
-  #gloria-embed-block .input-row .form-group { flex: 1; }
+
+  #gloria-embed-block .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #gloria-embed-block .input-row {
+    display: flex;
+    gap: 14px;
+  }
+
+  #gloria-embed-block .input-row .form-group {
+    flex: 1;
+  }
 
   #gloria-embed-block .checkbox-group {
     display: flex;
@@ -504,6 +606,7 @@
     gap: 10px;
     margin: 16px 0 20px;
   }
+
   #gloria-embed-block .checkbox-group input[type="checkbox"] {
     width: auto;
     margin: 0;
@@ -511,6 +614,7 @@
     accent-color: var(--gold);
     transform: scale(1.2);
   }
+
   #gloria-embed-block .checkbox-group label {
     margin: 0;
     text-transform: none;
@@ -522,19 +626,137 @@
     cursor: pointer;
   }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
-  #gloria-embed-block .fade-up { animation: fadeUp .7s ease forwards; }
-  #gloria-embed-block #step-result { display: none; }
-  #gloria-embed-block #step-result.visible { display: block; }
-  
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #gloria-embed-block .fade-up {
+    animation: fadeUp .7s ease forwards;
+  }
+
+  #gloria-embed-block #step-result {
+    display: none;
+  }
+
+  #gloria-embed-block #step-result.visible {
+    display: block;
+  }
+
+  /* ===== DADATA SUGGESTIONS ===== */
+  #gloria-embed-block .address-wrap {
+    position: relative;
+  }
+
+  #gloria-embed-block .dadata-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    max-height: 260px;
+    overflow-y: auto;
+    background: rgba(8, 16, 42, 0.97);
+    border: 1px solid rgba(74, 127, 212, 0.35);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    display: none;
+  }
+
+  #gloria-embed-block .dadata-suggestions.visible {
+    display: block;
+  }
+
+  #gloria-embed-block .dadata-suggestion {
+    padding: 12px 18px;
+    font-size: 14px;
+    color: var(--offwhite);
+    cursor: pointer;
+    border-bottom: 1px solid rgba(74, 127, 212, 0.1);
+    transition: background 0.15s, color 0.15s;
+    line-height: 1.5;
+  }
+
+  #gloria-embed-block .dadata-suggestion:last-child {
+    border-bottom: none;
+  }
+
+  #gloria-embed-block .dadata-suggestion:hover,
+  #gloria-embed-block .dadata-suggestion.active {
+    background: rgba(74, 127, 212, 0.18);
+    color: var(--white);
+  }
+
+  #gloria-embed-block .dadata-suggestion .dadata-hint {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  #gloria-embed-block .dadata-suggestions::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #gloria-embed-block .dadata-suggestions::-webkit-scrollbar-thumb {
+    background: rgba(74, 127, 212, 0.3);
+    border-radius: 3px;
+  }
+
+  #gloria-embed-block input[readonly] {
+    opacity: 0.7;
+    cursor: default;
+  }
+
+  #gloria-embed-block .dadata-powered {
+    padding: 6px 18px;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    opacity: 0.5;
+  }
+
   @media(max-width:768px) {
-    #gloria-embed-block .proof-strip { gap: 24px; padding: 16px 20px; }
-    #gloria-embed-block .card { padding: 24px 20px; }
-    #gloria-embed-block .code-grid { gap: 8px; }
-    #gloria-embed-block .code-value { font-size: 30px; }
-    #gloria-embed-block .code-sequence { font-size: 22px; letter-spacing: 8px; }
-    #gloria-embed-block .input-row { flex-direction: column; gap: 0; }
-    #gloria-embed-block .countdown { font-size: 28px; }
+    #gloria-embed-block .proof-strip {
+      gap: 24px;
+      padding: 16px 20px;
+    }
+
+    #gloria-embed-block .card {
+      padding: 24px 20px;
+    }
+
+    #gloria-embed-block .code-grid {
+      gap: 8px;
+    }
+
+    #gloria-embed-block .code-value {
+      font-size: 30px;
+    }
+
+    #gloria-embed-block .code-sequence {
+      font-size: 22px;
+      letter-spacing: 8px;
+    }
+
+    #gloria-embed-block .input-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    #gloria-embed-block .countdown {
+      font-size: 28px;
+    }
   }
 </style>
 
@@ -542,7 +764,9 @@
   <!-- VIDEO BACKGROUND -->
   <div class="videoBackground">
     <video preload="auto" playsinline autoplay loop muted>
-      <source src="https://dl.dropbox.com/scl/fi/2wd26j9lqwhdgio78wjuu/0_Space_Stars_1280x720.mp4?rlkey=ayax80vi8atyehd84q5wj00b9&st=bgg58aa6&dl=0" type="video/mp4">
+      <source
+        src="https://dl.dropbox.com/scl/fi/2wd26j9lqwhdgio78wjuu/0_Space_Stars_1280x720.mp4?rlkey=ayax80vi8atyehd84q5wj00b9&st=bgg58aa6&dl=0"
+        type="video/mp4">
     </video>
   </div>
 
@@ -576,7 +800,8 @@
 
       <div id="step-result">
         <div class="card fade-up">
-          <div class="urgency-bar">&#9889; СРОЧНО &mdash; Глория обнаружила нечто исключительное в вашем коде. Это космическое окно закрывается через:</div>
+          <div class="urgency-bar">&#9889; СРОЧНО &mdash; Глория обнаружила нечто исключительное в вашем коде. Это
+            космическое окно закрывается через:</div>
           <div class="countdown-wrap">
             <div class="countdown-label">Время, оставшееся до получения бесплатного разбора</div>
             <div class="countdown" id="countdown">23:59:47</div>
@@ -605,18 +830,25 @@
           <div class="code-seq-box">
             <div class="code-label" style="margin-bottom:10px">Ваша Уникальная Последовательность Судьбы</div>
             <div class="code-sequence" id="result-sequence">&mdash; &mdash; &mdash; &mdash; &mdash;</div>
-            <div class="seq-note">Эта последовательность принадлежит только вам &mdash; она никогда не появлялась раньше и никогда не повторится.</div>
+            <div class="seq-note">Эта последовательность принадлежит только вам &mdash; она никогда не появлялась раньше
+              и никогда не повторится.</div>
           </div>
           <p class="result-msg">
             <strong>&#9889; Личное Сообщение от Глории:</strong><br><br>
-            За все годы практики Глория сталкивалась с такой точной конфигурацией всего пару раз, и каждый раз жизнь этих людей <em>менялась за считанные недели.</em><br><br>
-            Глория видит нечто экстраординарное, скрытое в ваших числах. Схождение космической энергии, указывающее на <strong>ВАЖНЫЙ поворотный момент</strong> в вашей жизни &mdash; в удаче, деньгах и судьбе.<br><br>
-            Но то, что обнаружила Глория, выходит далеко за рамки того, что она может показать на экране. Полный смысл Вашей Последовательности Судьбы и <span style="color:var(--gold); font-weight: 600;">&#127873; загадочный подарок, который приготовила для вас Вселенная</span>&hellip; могут быть переданы вам только <strong>лично.</strong><br><br>
+            За все годы практики Глория сталкивалась с такой точной конфигурацией всего пару раз, и каждый раз жизнь
+            этих людей <em>менялась за считанные недели.</em><br><br>
+            Глория видит нечто экстраординарное, скрытое в ваших числах. Схождение космической энергии, указывающее на
+            <strong>ВАЖНЫЙ поворотный момент</strong> в вашей жизни &mdash; в удаче, деньгах и судьбе.<br><br>
+            Но то, что обнаружила Глория, выходит далеко за рамки того, что она может показать на экране. Полный смысл
+            Вашей Последовательности Судьбы и <span style="color:var(--gold); font-weight: 600;">&#127873; загадочный
+              подарок, который приготовила для вас Вселенная</span>&hellip; могут быть переданы вам только
+            <strong>лично.</strong><br><br>
             <em>Звезды сошлись <strong>только сегодня.</strong> Не упустите этот момент.</em>
           </p>
           <hr class="divider" />
           <h2>&#128230; Куда Глория Должна Все Отправить?</h2>
-          <p class="section-sub">Ваш полный разбор Кода Судьбы + загадочный подарок будут отправлены <strong style="color:var(--gold)">абсолютно бесплатно.</strong> Никаких покупок и обязательств. Никогда.</p>
+          <p class="section-sub">Ваш полный разбор Кода Судьбы + загадочный подарок будут отправлены <strong
+              style="color:var(--gold)">абсолютно бесплатно.</strong> Никаких покупок и обязательств. Никогда.</p>
           <div class="free-badge">&#10024; Бесплатная Доставка Включена</div>
           <div class="progress-wrap">
             <div class="progress-label"><span>Шаг 3 из 3 &mdash; Детали Доставки</span><span>99%</span></div>
@@ -625,9 +857,12 @@
             </div>
           </div>
           <div class="input-row">
-            <div class="form-group"><label for="lname">Фамилия</label><input type="text" id="lname" placeholder="Ваша фамилия" autocomplete="family-name" /></div>
-            <div class="form-group"><label for="fname">Имя</label><input type="text" id="fname" placeholder="Ваше имя" autocomplete="given-name" /></div>
-            <div class="form-group"><label for="mname">Отчество</label><input type="text" id="mname" placeholder="Ваше отчество" autocomplete="additional-name" /></div>
+            <div class="form-group"><label for="lname">Фамилия</label><input type="text" id="lname"
+                placeholder="Ваша фамилия" autocomplete="family-name" /></div>
+            <div class="form-group"><label for="fname">Имя</label><input type="text" id="fname" placeholder="Ваше имя"
+                autocomplete="given-name" /></div>
+            <div class="form-group"><label for="mname">Отчество</label><input type="text" id="mname"
+                placeholder="Ваше отчество" autocomplete="additional-name" /></div>
           </div>
           <div class="input-row">
             <div class="form-group"><label for="gender">Пол</label>
@@ -637,18 +872,24 @@
                 <option value="Женский">Женский</option>
               </select>
             </div>
-            <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" /></div>
+            <div class="form-group"><label for="phone">Телефон</label><input type="tel" id="phone"
+                placeholder="+7 (___) ___-__-__" autocomplete="tel" /></div>
           </div>
-          <div class="form-group"><label for="email">Электронный адрес</label><input type="email" id="email" placeholder="example@mail.ru" autocomplete="email" /></div>
-          <div class="form-group"><label for="address">Улица, дом, корпус/строение, квартира</label><input type="text" id="address" placeholder="Например: ул. Ленина, д. 1, кв. 2" autocomplete="street-address" /></div>
-          <div class="input-row">
-            <div class="form-group"><label for="city">Город / Населенный пункт</label><input type="text" id="city" placeholder="Город или поселок" autocomplete="address-level2" /></div>
-            <div class="form-group"><label for="zip">Почтовый Индекс</label><input type="text" id="zip" placeholder="Индекс" autocomplete="postal-code" /></div>
+          <div class="form-group"><label for="email">Электронный адрес</label><input type="email" id="email"
+              placeholder="example@mail.ru" autocomplete="email" /></div>
+          <div class="form-group address-wrap">
+            <label for="address">&#127968; Адрес (город, улица, дом, квартира)</label>
+            <input type="text" id="address" placeholder="Начните вводить адрес..." autocomplete="off" />
+            <div class="dadata-suggestions" id="dadata-list"></div>
           </div>
-          <div class="form-group"><label for="country">Страна</label><input type="text" id="country" placeholder="Страна" autocomplete="country-name" /></div>
+          <div class="form-group">
+            <label for="zip">Почтовый Индекс</label>
+            <input type="text" id="zip" placeholder="Заполнится автоматически" readonly />
+          </div>
           <div class="checkbox-group">
             <input type="checkbox" id="privacyConsent" checked />
-            <label for="privacyConsent">Я согласен с <a href="/privacy" target="_blank" style="color: var(--accent2); text-decoration: underline;">политикой конфиденциальности</a></label>
+            <label for="privacyConsent">Я согласен с <a href="/privacy" target="_blank"
+                style="color: var(--accent2); text-decoration: underline;">политикой конфиденциальности</a></label>
           </div>
           <button class="btn" onclick="submitAddress()">ПРИСЛАТЬ МОЙ КОД УДАЧИ + ПОДАРОК &rarr;</button>
           <p class="micro-copy">&#128274; Ваш адрес конфиденциален и никогда не будет передан третьим лицам</p>
@@ -689,10 +930,142 @@
     document.getElementById('step-form').style.display = 'none';
     const r = document.getElementById('step-result');
     r.style.display = 'block'; r.classList.add('visible');
-    
+
     // Smooth scroll specifically to top of embed block
     document.getElementById('gloria-embed-block').scrollIntoView({ behavior: 'smooth' });
   }
+
+  /* =============================================
+     DADATA ADDRESS AUTOCOMPLETE
+     ============================================= */
+  !function () {
+    // ⚠️ ЗАМЕНИТЕ НА СВОЙ ТОКЕН: зарегистрируйтесь на dadata.ru (бесплатно)
+    const DADATA_TOKEN = 'ef21b5b17403b4baf4b7329de7f1ad8ea1300c8b';
+    const DADATA_URL = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address';
+
+    const addressInput = document.getElementById('address');
+    const zipInput = document.getElementById('zip');
+    const listEl = document.getElementById('dadata-list');
+    if (!addressInput || !listEl) return;
+
+    let debounceTimer = null;
+    let suggestions = [];
+    let activeIdx = -1;
+
+    // Fetch suggestions from DaData
+    function fetchSuggestions(query) {
+      if (query.length < 3) { hideSuggestions(); return; }
+      fetch(DADATA_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Token ' + DADATA_TOKEN
+        },
+        body: JSON.stringify({
+          query: query,
+          count: 7,
+          locations: [{ country: 'Россия' }],
+          from_bound: { value: 'city' },
+          to_bound: { value: 'flat' }
+        })
+      })
+        .then(r => r.json())
+        .then(data => {
+          suggestions = data.suggestions || [];
+          renderSuggestions();
+        })
+        .catch(() => hideSuggestions());
+    }
+
+    // Render dropdown
+    function renderSuggestions() {
+      if (!suggestions.length) { hideSuggestions(); return; }
+      activeIdx = -1;
+      let html = '';
+      suggestions.forEach((s, i) => {
+        const hint = [s.data.region_with_type, s.data.area_with_type].filter(Boolean).join(', ');
+        html += '<div class="dadata-suggestion" data-idx="' + i + '">' +
+          s.value +
+          (hint ? '<span class="dadata-hint">' + hint + '</span>' : '') +
+          '</div>';
+      });
+      html += '<div class="dadata-powered">DaData.ru</div>';
+      listEl.innerHTML = html;
+      listEl.classList.add('visible');
+
+      // Click handlers
+      listEl.querySelectorAll('.dadata-suggestion').forEach(el => {
+        el.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+          selectSuggestion(parseInt(this.dataset.idx));
+        });
+      });
+    }
+
+    function hideSuggestions() {
+      listEl.classList.remove('visible');
+      listEl.innerHTML = '';
+      suggestions = [];
+      activeIdx = -1;
+    }
+
+    // Select a suggestion
+    function selectSuggestion(idx) {
+      const s = suggestions[idx];
+      if (!s) return;
+      addressInput.value = s.value;
+      zipInput.value = s.data.postal_code || '';
+      if (s.data.postal_code) {
+        zipInput.style.opacity = '1';
+      }
+      hideSuggestions();
+    }
+
+    // Input listener with debounce
+    addressInput.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      // Clear zip when user types new address
+      zipInput.value = '';
+      zipInput.style.opacity = '0.7';
+      debounceTimer = setTimeout(() => fetchSuggestions(this.value.trim()), 300);
+    });
+
+    // Keyboard navigation
+    addressInput.addEventListener('keydown', function (e) {
+      const items = listEl.querySelectorAll('.dadata-suggestion');
+      if (!items.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIdx = Math.min(activeIdx + 1, items.length - 1);
+        updateActive(items);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIdx = Math.max(activeIdx - 1, 0);
+        updateActive(items);
+      } else if (e.key === 'Enter' && activeIdx >= 0) {
+        e.preventDefault();
+        selectSuggestion(activeIdx);
+      } else if (e.key === 'Escape') {
+        hideSuggestions();
+      }
+    });
+
+    function updateActive(items) {
+      items.forEach((el, i) => el.classList.toggle('active', i === activeIdx));
+      if (items[activeIdx]) items[activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+
+    // Hide on blur
+    addressInput.addEventListener('blur', function () {
+      setTimeout(hideSuggestions, 150);
+    });
+
+    // Show again on focus if there's text
+    addressInput.addEventListener('focus', function () {
+      if (this.value.trim().length >= 3) fetchSuggestions(this.value.trim());
+    });
+  }();
 
   function submitAddress() {
     const privacy = document.getElementById('privacyConsent');
@@ -701,11 +1074,12 @@
       return;
     }
 
-    const ids = ['lname', 'fname', 'mname', 'gender', 'phone', 'email', 'address', 'city', 'zip', 'country'];
+    const ids = ['lname', 'fname', 'mname', 'gender', 'phone', 'email', 'address', 'zip'];
     for (const id of ids) {
-      if (!document.getElementById(id).value.trim()) {
+      const el = document.getElementById(id);
+      if (!el || !el.value.trim()) {
         alert('Пожалуйста, заполните все обязательные поля, чтобы Глория знала, куда отправить ваш подарок.');
-        document.getElementById(id).focus();
+        if (el) el.focus();
         return;
       }
     }
@@ -720,9 +1094,8 @@
     formData.append("Phone", document.getElementById('phone').value.trim());
     formData.append("Email", document.getElementById('email').value.trim());
     formData.append("Address", document.getElementById('address').value.trim());
-    formData.append("City", document.getElementById('city').value.trim());
     formData.append("Zip", document.getElementById('zip').value.trim());
-    formData.append("Country", document.getElementById('country').value.trim());
+    formData.append("Country", "Россия");
 
     const birthEl = document.getElementById('result-birth');
     const desireEl = document.getElementById('result-desire');
